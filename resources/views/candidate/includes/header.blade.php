@@ -16,9 +16,9 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarCollapse">
 		<div class="navbar-nav ms-auto p-4 p-lg-0">
-			<a href="/" class="nav-item nav-link active">Trang chủ</a>
-			<a href="/job-list" class="nav-item nav-link">Danh sách việc làm</a>
-			<a href="/about" class="nav-item nav-link">Thông tin</a>
+			<a href="/" @if ($current_page=='home' ) class="nav-item nav-link active" @else class="nav-item nav-link" @endif>Trang chủ</a>
+			<a href="/job-list" @if ($current_page=='job-list' ) class="nav-item nav-link active" @else class="nav-item nav-link" @endif>Danh sách việc làm</a>
+			<a href="/" class="nav-item nav-link">Thông tin</a>
 
 			<!-- <div class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Jobs</a>
@@ -35,8 +35,10 @@
 					<a href="404.html" class="dropdown-item">404</a>
 				</div>
 			</div> -->
-			<a href="/contact" class="nav-item nav-link">Liên hệ</a>
+			<a href="/" class="nav-item nav-link">Liên hệ</a>
+			<a href="/dashboard" class="nav-item nav-link d-block d-lg-none">Đăng tuyển</a>
 		</div>
 		<a href="/dashboard" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Đăng tuyển<i class="fa fa-arrow-right ms-3"></i></a>
 	</div>
 </nav>
+<!-- Navbar End -->

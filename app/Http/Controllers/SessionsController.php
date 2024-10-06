@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SignInRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,19 +14,16 @@ class SessionsController extends Controller
         return view('recruiter.session.login-session');
     }
 
-    public function store()
+    public function store(SignInRequest $request)
     {
-        $attributes = request()->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        $attributes = $request->validated();
 
         if (Auth::attempt($attributes)) {
             session()->regenerate();
-            return redirect('dashboard')->with(['success' => 'You are logged in.']);
+            return redirect('dashboard')->with(['success' => 'Đăng nhập thành công']);
         } else {
 
-            return back()->withErrors(['email' => 'Email or password invalid.']);
+            return back()->withErrors(['error' => 'Email hoặc mật khẩu không đúng']);
         }
     }
 

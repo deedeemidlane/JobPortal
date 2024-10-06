@@ -7,13 +7,16 @@
     <div class="page-header min-vh-75">
       <div class="container">
         <div class="row">
-          <div class="col-md-6 d-flex flex-column mx-auto">
-            <div class="card card-plain mt-8">
-              <div class="card-header pb-0 text-left bg-transparent">
-                <h3 class="font-weight-bolder text-primary">Chào mừng bạn đã quay trở lại</h3>
-                <p class="mb-0">Cùng tạo dựng lợi thế cho doanh nghiệp bằng trải nghiệm công nghệ tuyển dụng ứng dụng sâu AI & Hiring Funnel<br></p>
+          <div class="col-lg-7 d-flex flex-column mx-auto pb-6">
+            <div class="card mt-8 py-md-4 px-md-6">
+              <div class="card-header pb-0 text-center bg-transparent">
+                <h3 class="font-weight-bolder text-primary">Đăng nhập tài khoản nhà tuyển dụng</h3>
+                <p class="mb-0">Đăng nhập tài khoản nhà tuyển dụng để tiến hành đăng tuyển ngay<br></p>
               </div>
               <div class="card-body">
+                @error('error')
+                <p class="text-danger text-center font-weight-bold m-0">{{ $message }}</p>
+                @enderror
                 <form role="form" method="POST" action="/session">
                   @csrf
                   <label>Email</label>
@@ -41,11 +44,11 @@
               </div>
               <div class="card-footer text-center pt-0 px-lg-2 px-1">
                 <small class="text-muted">Quên mật khẩu? Đặt lại mật khẩu tại
-                  <a href="/login/forgot-password" class="text-primary font-weight-bold">đây</a>
+                  <a href="/login/forgot-password" class="text-primary font-weight-bold font-weight-bolder">đây</a>
                 </small>
-                <p class="mb-4 text-sm mx-auto">
+                <p class="text-sm mx-auto mb-0">
                   Chưa có tài khoản?
-                  <a href="register" class="text-primary font-weight-bold">Đăng ký ngay</a>
+                  <a href="register" class="text-primary font-weight-bold font-weight-bolder">Đăng ký ngay</a>
                 </p>
               </div>
             </div>

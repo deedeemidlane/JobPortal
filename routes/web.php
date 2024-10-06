@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ChangePasswordController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
@@ -11,58 +10,44 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('candidate.home');
+    return view('candidate.home', [
+        'current_page' => 'home',
+    ]);
 });
 
 Route::get('/job-list', function () {
-    return view('candidate.job-list');
+    return view('candidate.job-list', [
+        'current_page' => 'job-list',
+    ]);
 });
 
 Route::group(['middleware' => 'auth'], function () {
-
-    // Route::get('/', [HomeController::class, 'home']);
     Route::get('dashboard', function () {
         return view('recruiter.dashboard');
     })->name('dashboard');
 
-    // Route::get('billing', function () {
-    //     return view('billing');
-    // })->name('billing');
+    Route::get('billing', function () {
+        return view('recruiter.billing');
+    })->name('billing');
 
-    // Route::get('profile', function () {
-    //     return view('profile');
-    // })->name('profile');
+    Route::get('profile', function () {
+        return view('recruiter.profile');
+    })->name('profile');
 
-    // Route::get('rtl', function () {
-    //     return view('rtl');
-    // })->name('rtl');
+    Route::get('user-management', function () {
+        return view('recruiter.laravel-examples.user-management');
+    })->name('user-management');
 
-    // Route::get('user-management', function () {
-    //     return view('laravel-examples/user-management');
-    // })->name('user-management');
-
-    // Route::get('tables', function () {
-    //     return view('tables');
-    // })->name('tables');
-
-    // Route::get('virtual-reality', function () {
-    //     return view('virtual-reality');
-    // })->name('virtual-reality');
-
-    // Route::get('static-sign-in', function () {
-    //     return view('static-sign-in');
-    // })->name('sign-in');
-
-    // Route::get('static-sign-up', function () {
-    //     return view('static-sign-up');
-    // })->name('sign-up');
+    Route::get('tables', function () {
+        return view('recruiter.tables');
+    })->name('tables');
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
-    // Route::get('/user-profile', [InfoUserController::class, 'create']);
-    // Route::post('/user-profile', [InfoUserController::class, 'store']);
-    // Route::get('/login', function () {
-    //     return view('dashboard');
-    // })->name('sign-up');
+    Route::get('/user-profile', [InfoUserController::class, 'create']);
+    Route::post('/user-profile', [InfoUserController::class, 'store']);
+    Route::get('/login', function () {
+        return view('recruiter.dashboard');
+    })->name('sign-up');
 });
 
 

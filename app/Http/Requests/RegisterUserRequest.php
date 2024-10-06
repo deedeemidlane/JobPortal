@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+// use Illuminate\Validation\Rule;
 
 class RegisterUserRequest extends FormRequest
 {
@@ -23,7 +23,7 @@ class RegisterUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'max:50', Rule::unique('users', 'email')],
+            'email' => ['required', 'email', 'max:50', 'unique:users'],
             'password' => ['required', 'min:5', 'max:20'],
             'name' => ['required', 'max:50'],
             'phone' => ['required', 'digits_between:10,11'],
@@ -39,7 +39,9 @@ class RegisterUserRequest extends FormRequest
         return [
             'email.required' => 'Email đăng nhập không được để trống',
             'email.email' => 'Email không hợp lệ',
+            'email.unique' => 'Email đã được sử dụng cho tài khoản khác',
             'password.required' => 'Mật khẩu không được để trống',
+            'password.min' => 'Mật khẩu phải chứa ít nhất 5 ký tự',
             'name.required' => 'Họ và tên không được để trống',
             'phone.required' => 'Số điện thoại không được để trống',
             'phone.digits_between' => 'Số điện thoại phải chứa từ 10-11 chữ số',
