@@ -11,7 +11,7 @@ class SessionsController extends Controller
 {
     public function create()
     {
-        return view('recruiter.session.login-session');
+        return view('admin.session.login-session');
     }
 
     public function store(SignInRequest $request)
@@ -20,16 +20,24 @@ class SessionsController extends Controller
 
         if (Auth::attempt($attributes)) {
             session()->regenerate();
-            return redirect('dashboard')->with(['success' => 'Đăng nhập thành công']);
-        } else {
+            $user = Auth::user();
 
+            switch ($user->role) {
+                case "ADMIN":
+                    return redirect('/admin/dashboard');
+                    break;
+                default:
+                    return redirect("/");
+            }
+
+            // return redirect('dashboard')->with(['success' => 'Đăng nhập thành công']);
+        } else {
             return back()->withErrors(['error' => 'Email hoặc mật khẩu không đúng']);
         }
     }
 
     public function destroy()
     {
-
         Auth::logout();
 
         return redirect('/login')->with(['success' => 'You\'ve been logged out.']);

@@ -13,7 +13,7 @@ class InfoUserController extends Controller
 
     public function create()
     {
-        return view('recruiter.laravel-examples.user-profile');
+        return view('admin.laravel-examples.user-profile', ["tab_name" => "Profile"]);
     }
 
     public function store(Request $request)

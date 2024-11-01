@@ -4,45 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class RegisterController extends Controller
+class UserController extends Controller
 {
     public function create()
     {
-        return view('admin.session.register');
+        return view('admin.create-account', ["tab_name" => "Quản lý tài khoản"]);
     }
 
     public function store(RegisterUserRequest $request)
     {
         $validated = $request->validated();
 
-        // $attributes = request()->validate([
-        //     'name' => ['required', 'max:50'],
-        //     'email' => ['required', 'email', 'max:50', Rule::unique('users', 'email')],
-        //     'password' => ['required', 'min:5', 'max:20'],
-        //     'agreement' => ['accepted']
-        // ]);
-
-        // $attributes['password'] = bcrypt($attributes['password']);
-
         $validated['password'] = bcrypt($validated['password']);
 
         DB::beginTransaction();
 
         try {
-            $user = User::create([
+            User::create([
                 'email' => $validated['email'],
                 'password' => $validated['password'],
                 'name' => $validated['name'],
                 'phone' => $validated['phone'],
-                'role' => "ADMIN"
+                'role' => $validated['role']
             ]);
-
-            Auth::login($user);
 
             session()->flash('success', 'Tạo tài khoản thành công!');
 
@@ -52,6 +40,15 @@ class RegisterController extends Controller
             DB::rollBack();
         }
 
-        return redirect('admin/dashboard');
+        return redirect('/admin/user-management');
+    }
+
+    public function list_users()
+    {
+        $users = User::where("role", "HR")->orWhere("role", "MANAGER")->get();
+        return view('admin.user-management', [
+            "tab_name" => "Quản lý tài khoản",
+            "users" => $users
+        ]);
     }
 }

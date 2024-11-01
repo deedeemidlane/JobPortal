@@ -36,9 +36,9 @@
 				</div>
 			</div> -->
 			<a href="/" class="nav-item nav-link">Liên hệ</a>
-			<a href="/dashboard" class="nav-item nav-link d-block d-lg-none">Đăng tuyển</a>
+			<a href="/login" class="nav-item nav-link d-block d-lg-none">Đăng nhập</a>
 		</div>
-		<a href="/dashboard" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Đăng tuyển<i class="fa fa-arrow-right ms-3"></i></a>
+		<a href="/login" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Đăng nhập<i class="fa fa-arrow-right ms-3"></i></a>
 	</div>
 </nav>
 <!-- Navbar End -->

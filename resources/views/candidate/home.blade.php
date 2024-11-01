@@ -11,10 +11,10 @@
                 <div class="container">
                     <div class="row justify-content-start">
                         <div class="col-10 col-lg-8">
-                            <h1 class="display-3 text-white animated slideInDown mb-4">Tìm việc làm nhanh 24h, việc làm mới nhất trên toàn quốc.</h1>
+                            <h1 class="display-3 text-white animated slideInDown mb-4">Tìm việc làm nhanh 24h, việc làm mới nhất tại Enuy.</h1>
                             <p class="fs-5 fw-medium text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>
-                            <a href="/job-list" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Tìm việc làm</a>
-                            <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Tuyển ứng viên</a>
+                            <a href="/job-list" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInRight">Tìm việc làm</a>
+                            <!-- <a href="/dashboard" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Tuyển ứng viên</a> -->
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                             <h1 class="display-3 text-white animated slideInDown mb-4">Tìm việc làm phù hợp nhất với năng lục của bạn</h1>
                             <p class="fs-5 fw-medium text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>
                             <a href="/job-list" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Tìm việc làm</a>
-                            <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Tuyển ứng viên</a>
+                            <!-- <a href="/dashboard" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Tuyển ứng viên</a> -->
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
 
 
 <!-- Category Start -->
-<div class="container-xxl py-5">
+<!-- <div class="container-xxl py-5">
     <div class="container">
         <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Top ngành nghề nổi bật</h1>
         <div class="row g-4">
@@ -141,7 +141,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Category End -->
 
 
