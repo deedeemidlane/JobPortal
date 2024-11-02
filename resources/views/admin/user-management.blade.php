@@ -88,17 +88,17 @@
                             Tạo tài khoản
                         </button> -->
 
-                        <a href="/admin/create-account" class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button">
+                        <a href="/admin/user-management/create-account" class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button">
                             <span class="text-md">+</span>
                             Tạo tài khoản
                         </a>
                     </div>
                 </div>
-                <div class="card-body px-0 pt-0 pb-2">
+                <div class="card-body px-0 pt-3 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>
-                                <tr>
+                                <tr class="border-top border-light">
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         ID
                                     </th>
@@ -110,6 +110,9 @@
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Email
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Số điện thoại
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Chức vụ
@@ -141,20 +144,42 @@
                                         <p class="text-xs font-weight-bold mb-0">{{ $user->email }}</p>
                                     </td>
                                     <td class="">
+                                        <p class="text-xs font-weight-bold mb-0">{{ $user->phone }}</p>
+                                    </td>
+                                    <td class="">
                                         <p class="text-xs font-weight-bold mb-0">{{ constant('App\Models\User::DISPLAYED_ROLE')[$user->role] }}</p>
                                     </td>
                                     <td class="text-center">
                                         <span class="text-secondary text-xs font-weight-bold">{{ date("d/m/Y", strtotime($user->created_at)) }}</span>
                                     </td>
                                     <td class="text-center">
-                                        <a href="#" class="me-2" data-bs-toggle="tooltip" data-bs-original-title="Chỉnh sửa">
+                                        <a href="/admin/user-management/update-account/{{$user->id}}" class="me-2" data-bs-toggle="tooltip" data-bs-original-title="Chỉnh sửa">
                                             <i class="fas fa-user-edit text-blue"></i>
                                         </a>
-                                        <a href="#" class="" data-bs-toggle="tooltip" data-bs-original-title="Xóa">
+                                        <span type="button" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$user->id}}">
                                             <i class="cursor-pointer fas fa-trash text-danger"></i>
-                                        </a>
+                                        </span>
                                     </td>
                                 </tr>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="confirmModal-{{$user->id}}" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="confirmModalLabel-{{$user->id}}">Xác nhận xóa</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h6 class="mb-0 text-danger">Bạn có chắc chắc muốn xóa tài khoản này?</h6>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                <a href="/admin/user-management/delete-account/{{$user->id}}" type="button" class="btn btn-danger">Xóa</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 @endforeach
 

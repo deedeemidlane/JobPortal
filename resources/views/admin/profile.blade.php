@@ -379,7 +379,6 @@
         </div>
       </div>
     </div>
-    @include('admin.layouts.footers.auth.footer')
   </div>
 </div>
 

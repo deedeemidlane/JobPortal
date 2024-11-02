@@ -24,13 +24,14 @@ class SessionsController extends Controller
 
             switch ($user->role) {
                 case "ADMIN":
+                    session()->flash('success', 'Đăng nhập thành công!');
                     return redirect('/admin/dashboard');
                     break;
                 default:
                     return redirect("/");
             }
 
-            // return redirect('dashboard')->with(['success' => 'Đăng nhập thành công']);
+            return redirect('dashboard')->with(['success' => 'Đăng nhập thành công']);
         } else {
             return back()->withErrors(['error' => 'Email hoặc mật khẩu không đúng']);
         }
@@ -40,6 +41,6 @@ class SessionsController extends Controller
     {
         Auth::logout();
 
-        return redirect('/login')->with(['success' => 'You\'ve been logged out.']);
+        return redirect('/login')->with(['success' => 'Bạn đã đăng xuất']);
     }
 }

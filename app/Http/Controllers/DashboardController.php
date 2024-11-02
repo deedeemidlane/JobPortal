@@ -9,7 +9,8 @@ class DashboardController extends Controller
     public function dashboard(Request $request)
     {
         return view('admin.dashboard', [
-            "tab_name" => "Trang chủ"
+            "tab_name" => "Trang chủ",
+            "breadcrumb_url" => "/admin/dashboard",
         ]);
     }
 }
