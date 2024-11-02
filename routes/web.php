@@ -45,5 +45,5 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::get('/login', function () {
-    return view('admin.session.login-session');
+    return view('session.login');
 })->name('login');

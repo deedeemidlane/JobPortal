@@ -42,12 +42,13 @@
 
 <body class="g-sidenav-show bg-gray-100">
 
-  @auth
-  @yield('auth')
-  @endauth
-  @guest
-  @yield('guest')
-  @endguest
+  @include('admin.layouts.navbars.sidebar')
+  <main class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
+    @include('admin.layouts.navbars.nav')
+    <div class="container-fluid py-4">
+      @yield('content')
+    </div>
+  </main>
 
   <!--   Core JS Files   -->
   <script src="/assets/admin/js/core/popper.min.js"></script>
@@ -78,7 +79,7 @@
       "closeButton": true
     }
     toastr.success("{{session('success')}}", 'Thành công!', {
-      timeOut: 4000
+      timeOut: 3000
     });
   </script>
   @endif

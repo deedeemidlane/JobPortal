@@ -11,7 +11,7 @@ class SessionsController extends Controller
 {
     public function create()
     {
-        return view('admin.session.login-session');
+        return view('session.login');
     }
 
     public function store(SignInRequest $request)
