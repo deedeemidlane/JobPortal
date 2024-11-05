@@ -4384,6 +4384,10 @@ fieldset:disabled .btn {
   opacity: 0
 }
 
+.collapse {
+  visibility: visible;
+}
+
 .collapse:not(.show) {
   display: none
 }
@@ -4400,12 +4404,12 @@ fieldset:disabled .btn {
   }
 }
 
-.dropdown,
+/* .dropdown,
 .dropend,
 .dropstart,
 .dropup {
   position: relative
-}
+} */
 
 .dropdown-toggle {
   white-space: nowrap
@@ -7793,7 +7797,7 @@ fieldset:disabled .btn {
 }
 
 .top-0 {
-  top: 0 !important
+  top: 0
 }
 
 .top-1 {
@@ -8128,9 +8132,9 @@ fieldset:disabled .btn {
   width: 3% !important
 }
 
-.w-4 {
-  width: 4% !important
-}
+/* .w-4 {
+  width: 4%
+} */
 
 .w-5 {
   width: 5% !important
@@ -9876,7 +9880,7 @@ fieldset:disabled .btn {
 
 .bg-body,
 .bg-white {
-  background-color: #fff !important
+  background-color: #fff
 }
 
 .bg-transparent {

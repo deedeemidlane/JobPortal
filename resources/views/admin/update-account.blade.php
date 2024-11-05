@@ -52,7 +52,7 @@
                                     <select class="form-select" name="role" id="role" aria-label="role" aria-describedby="role">
                                         <option value="">Chọn chức vụ</option>
                                         <option value="HR" @if($current_user->role=="HR" ) selected @endif>HR</option>
-                                        <option value="MANAGER" @if($current_user->role=="MANAGER" ) selected @endif>Trưởng bộ phận</option>
+                                        <option value="MANAGER" @if($current_user->role=="MANAGER" ) selected @endif>Trường phòng</option>
                                     </select>
                                     @error('role')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>

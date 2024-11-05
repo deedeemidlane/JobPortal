@@ -1,15 +1,11 @@
 <?php
 
-use App\Http\Controllers\ChangePasswordController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\InfoUserController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
-use App\Http\Controllers\UserController;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\HR\CanidateController;
+use App\Http\Controllers\HR\InterviewController;
+use App\Http\Controllers\HR\RecruitmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,6 +31,19 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::post('update-account/{id}', [UserController::class, 'post_update'])->where('id', '[0-9]+');
         Route::get('delete-account/{id}', [UserController::class, 'delete'])->where('id', '[0-9]+');
     });
+
+    Route::get('/logout', [SessionsController::class, 'destroy']);
+});
+
+Route::prefix('hr')->middleware(['auth'])->group(function () {
+    Route::prefix('recruitment-news')->group(function () {
+        Route::get('/', [RecruitmentController::class, 'list_recruitment_news']);
+        Route::get('create', [RecruitmentController::class, 'create']);
+        Route::post('create', [RecruitmentController::class, 'post_create']);
+    });
+
+    Route::get('candidate-management', [CanidateController::class, 'list_candidates']);
+    Route::get('interview-management', [InterviewController::class, 'list_interviews']);
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
 });

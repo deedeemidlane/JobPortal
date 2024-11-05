@@ -63,7 +63,7 @@
                                     <select class="form-select" name="role" id="role" aria-label="role" aria-describedby="role">
                                         <option value="">Chọn chức vụ</option>
                                         <option value="HR">HR</option>
-                                        <option value="MANAGER">Trưởng bộ phận</option>
+                                        <option value="MANAGER">Trường phòng</option>
                                     </select>
                                     @error('role')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>

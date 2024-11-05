@@ -21,12 +21,14 @@ class SessionsController extends Controller
         if (Auth::attempt($attributes)) {
             session()->regenerate();
             $user = Auth::user();
+            session()->flash('success', 'Đăng nhập thành công!');
 
             switch ($user->role) {
                 case "ADMIN":
-                    session()->flash('success', 'Đăng nhập thành công!');
                     return redirect('/admin/dashboard');
                     break;
+                case "HR":
+                    return redirect('/hr/recruitment-news');
                 default:
                     return redirect("/");
             }

@@ -58,7 +58,7 @@
                             <select class="form-select" name="role" id="role" aria-label="role" aria-describedby="role">
                                 <option value="">Chọn tỉnh/thành phố</option>
                                 <option value="HR">HR</option>
-                                <option value="MANAGER">Trưởng bộ phận</option>
+                                <option value="MANAGER">Trường phòng</option>
                             </select>
                             @error('role')
                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -185,6 +185,11 @@
 
                             </tbody>
                         </table>
+                        @if($users->count() == 0)
+                        <div class="text-center py-5">
+                            Chưa có tài khoản nào trên hệ thống
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
