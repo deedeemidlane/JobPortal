@@ -17,7 +17,7 @@
 	<div class="collapse navbar-collapse" id="navbarCollapse">
 		<div class="navbar-nav ms-auto p-4 p-lg-0">
 			<a href="/" @if ($current_page=='home' ) class="nav-item nav-link active" @else class="nav-item nav-link" @endif>Trang chủ</a>
-			<a href="/job-list" @if ($current_page=='job-list' ) class="nav-item nav-link active" @else class="nav-item nav-link" @endif>Danh sách việc làm</a>
+			<a href="/jobs" @if ($current_page=='job-list' ) class="nav-item nav-link active" @else class="nav-item nav-link" @endif>Danh sách việc làm</a>
 			<a href="/" class="nav-item nav-link">Thông tin</a>
 
 			<!-- <div class="nav-item dropdown">

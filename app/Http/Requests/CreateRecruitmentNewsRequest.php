@@ -46,7 +46,7 @@ class CreateRecruitmentNewsRequest extends FormRequest
             'position.required' => 'Vui lòng chọn cấp bậc',
             'deadline.required' => 'Vui lòng chọn hạn ứng tuyển',
             'description.required' => 'Mô tả công việc không được để trống',
-            'requirement.required' => 'Yêu cầu công việc không được để trống',
+            'requirement.required' => 'Yêu cầu ứng viên không được để trống',
             'benefit.required' => 'Quyền lợi không được để trống',
             'location.required' => 'Vui lòng chọn tỉnh/thành phố',
             'workplace.required' => 'Địa chỉ không được để trống',

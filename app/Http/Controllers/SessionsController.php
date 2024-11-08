@@ -25,7 +25,7 @@ class SessionsController extends Controller
 
             switch ($user->role) {
                 case "ADMIN":
-                    return redirect('/admin/dashboard');
+                    return redirect('/admin/user-management');
                     break;
                 case "HR":
                     return redirect('/hr/recruitment-news');

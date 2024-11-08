@@ -11,7 +11,7 @@
     <div class="card-header pb-0 px-4">
       <div class="d-flex flex-row justify-content-between">
         <div>
-          <h5 class="mb-0">Tạo tin tuyển dụng</h5>
+          <h5 class="mb-0">Đăng tin tuyển dụng</h5>
         </div>
       </div>
     </div>
@@ -66,7 +66,7 @@
           <div class="col-md-6">
             <div class="form-group">
               <div class="flex align-items-center">
-                <label for="" class="text-sm">Mức lương (VND) <span class="text-danger">*</span></label>
+                <label for="" class="text-sm">Mức lương (triệu đồng) <span class="text-danger">*</span></label>
                 <div class="mb-0 ps-0 d-flex align-items-center ms-auto">
                   <input class="m-0 rounded-sm focus:ring-0 focus:outline-white text-[#3db87a] cursor-pointer" type="checkbox" id="negotiable" name="negotiable" value="0">
                   <label class="text-xs font-bold ms-1 text-truncate w-80 mb-0 cursor-pointer" for="negotiable">Thỏa thuận</label>
@@ -97,7 +97,7 @@
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                   <i class="bi bi-calendar-event-fill"></i>
                 </div>
-                <input id="datepicker-format" datepicker datepicker-format="dd/mm/yyyy" type="text" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="deadline" id="deadline" avalue="{{ old('deadline') }}">
+                <input id="datepicker-format" datepicker datepicker-format="dd/mm/yyyy" type="text" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="deadline" id="deadline" value="{{ old('deadline') }}">
               </div>
               @error('deadline')
               <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -109,7 +109,7 @@
           <div class="form-group">
             <label for="description" class="text-sm">Mô tả công việc <span class="text-danger">*</span></label>
             <div class="">
-              <x-trix-input id="description" placeholder="Mô tả công việc" name="description" />
+              <x-trix-input id="description" placeholder="Mô tả công việc" name="description" value="{{ sanitize_html(old('description')) }}" />
             </div>
             @error('description')
             <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -118,9 +118,9 @@
         </div>
         <div class="row">
           <div class="form-group">
-            <label for="requirement" class="text-sm">Yêu cầu công việc <span class="text-danger">*</span></label>
+            <label for="requirement" class="text-sm">Yêu cầu ứng viên <span class="text-danger">*</span></label>
             <div class="">
-              <x-trix-input id="requirement" placeholder="Yêu cầu công việc" name="requirement" />
+              <x-trix-input id="requirement" placeholder="Yêu cầu ứng viên" name="requirement" value="{{ sanitize_html(old('requirement')) }}" />
             </div>
             @error('requirement')
             <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -131,7 +131,7 @@
           <div class="form-group">
             <label for="benefit" class="text-sm">Quyền lợi <span class="text-danger">*</span></label>
             <div class="">
-              <x-trix-input id="benefit" placeholder="Quyền lợi" name="benefit" />
+              <x-trix-input id="benefit" placeholder="Quyền lợi" name="benefit" value="{{ sanitize_html(old('benefit')) }}" />
             </div>
             @error('benefit')
             <p class="text-danger text-xs mt-2">{{ $message }}</p>

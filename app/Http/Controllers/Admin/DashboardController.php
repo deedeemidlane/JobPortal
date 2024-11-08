@@ -11,7 +11,7 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard', [
             "tab_name" => "Trang chủ",
-            "breadcrumb_url" => "/admin/dashboard",
+            "breadcrumb_url" => "/admin/user-management",
         ]);
     }
 }

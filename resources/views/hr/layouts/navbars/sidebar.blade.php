@@ -19,9 +19,9 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ (Request::is('hr/candidate-management') || Request::is('hr/candidate-management/*') ? 'active' : '') }}" href="{{ url('hr/candidate-management') }}">
+        <a class="nav-link {{ (Request::is('hr/applications') || Request::is('hr/applications/*') ? 'active' : '') }}" href="{{ url('hr/applications') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i style="font-size: 0.9rem" class="bi bi-people-fill pb-1 {{ (Request::is('hr/candidate-management') || Request::is('hr/candidate-management/*') ? 'text-white' : 'text-dark') }}"></i>
+            <i style="font-size: 0.9rem" class="bi bi-people-fill pb-1 {{ (Request::is('hr/applications') || Request::is('hr/applications/*') ? 'text-white' : 'text-dark') }}"></i>
           </div>
           <span class="nav-link-text ms-1">Quản lý ứng viên</span>
         </a>

@@ -3,22 +3,16 @@
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Candidate\JobController;
 use App\Http\Controllers\HR\CanidateController;
 use App\Http\Controllers\HR\InterviewController;
 use App\Http\Controllers\HR\RecruitmentController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('candidate.home', [
-        'current_page' => 'home',
-    ]);
-});
-
-Route::get('/job-list', function () {
-    return view('candidate.job-list', [
-        'current_page' => 'job-list',
-    ]);
-});
+Route::get('/', [JobController::class, 'home']);
+Route::get('/jobs', [JobController::class, 'list_jobs']);
+Route::get('/jobs/{id}', [JobController::class, 'job_detail'])->where('id', '[0-9]+');
+Route::post('/jobs/{id}', [JobController::class, 'apply'])->where('id', '[0-9]+');
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
@@ -40,9 +34,16 @@ Route::prefix('hr')->middleware(['auth'])->group(function () {
         Route::get('/', [RecruitmentController::class, 'list_recruitment_news']);
         Route::get('create', [RecruitmentController::class, 'create']);
         Route::post('create', [RecruitmentController::class, 'post_create']);
+        Route::get('update/{id}', [RecruitmentController::class, 'update'])->where('id', '[0-9]+');
+        Route::post('update/{id}', [RecruitmentController::class, 'post_update'])->where('id', '[0-9]+');
+        Route::get('delete/{id}', [RecruitmentController::class, 'delete'])->where('id', '[0-9]+');
     });
 
-    Route::get('candidate-management', [CanidateController::class, 'list_candidates']);
+    Route::prefix('applications')->group(function () {
+        Route::get('/', [CanidateController::class, 'list_applications']);
+        Route::get('delete/{id}', [CanidateController::class, 'delete'])->where('id', '[0-9]+');
+    });
+
     Route::get('interview-management', [InterviewController::class, 'list_interviews']);
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
