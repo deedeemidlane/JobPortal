@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="card-body pt-4">
-                    <form action="/admin/user-management/create-account" method="POST" role="form text-left">
+                    <form action="/company/users/create-account" method="POST" role="form text-left">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">

@@ -79,16 +79,16 @@
             <div class="card mb-4 mx-4">
                 <div class="card-header pb-0">
                     <div class="d-flex flex-row justify-content-between">
-                        <div>
-                            <h5 class="mb-0">Danh sách tài khoản</h5>
-                        </div>
+                        <!-- <div> -->
+                        <h5 class="mb-0">Danh sách tài khoản</h5>
+                        <!-- </div> -->
                         <!-- Button trigger modal -->
                         <!-- <button class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button" data-bs-toggle="modal" data-bs-target="#accountModal">
                             <span class="text-md">+</span>
                             Tạo tài khoản
                         </button> -->
 
-                        <a href="/admin/user-management/create-account" class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button">
+                        <a href="/company/users/create-account" class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button">
                             <span class="text-md">+</span>
                             Tạo tài khoản
                         </a>
@@ -127,7 +127,6 @@
                             </thead>
                             <tbody>
                                 @foreach ($users as $user)
-
                                 <tr>
                                     <td class="ps-4">
                                         <p class="text-xs font-weight-bold mb-0">{{ $user->id }}</p>
@@ -153,7 +152,7 @@
                                         <span class="text-secondary text-xs font-weight-bold">{{ date("d/m/Y", strtotime($user->created_at)) }}</span>
                                     </td>
                                     <td class="text-center">
-                                        <a href="/admin/user-management/update-account/{{$user->id}}" class="me-2" data-bs-toggle="tooltip" data-bs-original-title="Chỉnh sửa">
+                                        <a href="/company/users/update-account/{{$user->id}}" class="me-2">
                                             <i class="fas fa-user-edit text-blue"></i>
                                         </a>
                                         <span type="button" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$user->id}}">
@@ -175,7 +174,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                                <a href="/admin/user-management/delete-account/{{$user->id}}" type="button" class="btn btn-danger">Xóa</a>
+                                                <a href="/company/users/delete-account/{{$user->id}}" type="button" class="btn btn-danger">Xóa</a>
                                             </div>
                                         </div>
                                     </div>

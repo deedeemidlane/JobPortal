@@ -42,7 +42,7 @@
                   <!-- <span class="text-xs bg-gray-500 text-white py-1 px-2 rounded-sm">Đã xem</span> -->
                 </td>
                 <td class="">
-                  <a href=" /hr/recruitment-news/update/{{$application->job_id}}" target="_blank" class="text-xs font-weight-bold mb-0">{{$application->job_title}}</a>
+                  <a href=" /company/recruitment-news/update/{{$application->job_id}}" target="_blank" class="text-xs font-weight-bold mb-0">{{$application->job_title}}</a>
                 </td>
                 <td class="">
                   <p class="text-xs mb-2"><i class="bi bi-envelope-at-fill"></i> {{$application->candidate_email}}</p>
@@ -77,7 +77,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                      <a href="/hr/applications/delete/{{$application->id}}" type="button" class="btn btn-danger">Xóa</a>
+                      <a href="/company/applications/delete/{{$application->id}}" type="button" class="btn btn-danger">Xóa</a>
                     </div>
                   </div>
                 </div>

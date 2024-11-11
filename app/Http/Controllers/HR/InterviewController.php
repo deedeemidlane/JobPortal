@@ -11,7 +11,7 @@ class InterviewController extends Controller
     {
         return view('hr.interview-management', [
             "tab_name" => "Quản lý tin tuyển dụng",
-            "breadcrumb_url" => "/hr/interview-management",
+            "breadcrumb_url" => "/company/interview-management",
         ]);
     }
 }

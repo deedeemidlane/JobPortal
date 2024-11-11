@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="card-body p-4">
-      <form action="/hr/recruitment-news/create" method="POST" role="form text-left">
+      <form action="/company/recruitment-news/create" method="POST" role="form text-left">
         @csrf
         <div class="row">
           <div class="form-group">

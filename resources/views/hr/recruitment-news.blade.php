@@ -9,7 +9,7 @@
         <div>
           <h5 class="mb-0">Danh sách tin tuyển dụng</h5>
         </div>
-        <a href="/hr/recruitment-news/create" class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button">
+        <a href="/company/recruitment-news/create" class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button">
           <span class="text-md">+</span>
           Đăng tin
         </a>
@@ -58,7 +58,7 @@
             </div>
           </div>
           <div class="ms-auto text-end">
-            <a class="btn btn-link text-dark px-3 mb-0 d-block d-lg-inline-block" href="/hr/recruitment-news/update/{{$job->id}}">
+            <a class="btn btn-link text-dark px-3 mb-0 d-block d-lg-inline-block" href="/company/recruitment-news/update/{{$job->id}}">
               <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Chỉnh sửa
             </a>
             <button class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$job->id}}">
@@ -79,13 +79,16 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <a href="/hr/recruitment-news/delete/{{$job->id}}" type="button" class="btn btn-danger">Xóa</a>
+                <a href="/company/recruitment-news/delete/{{$job->id}}" type="button" class="btn btn-danger">Xóa</a>
               </div>
             </div>
           </div>
         </div>
         @endforeach
       </ul>
+      @if($jobs->count() == 0)
+      <div class="text-center py-2">Không có tin tuyển dụng nào trên hệ thống</div>
+      @endif
     </div>
   </div>
 </div>

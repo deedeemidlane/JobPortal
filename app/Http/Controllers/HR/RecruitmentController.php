@@ -19,7 +19,7 @@ class RecruitmentController extends Controller
 
         return view('hr.recruitment-news', [
             "tab_name" => "Quản lý tin tuyển dụng",
-            "breadcrumb_url" => "/hr/recruitment-news",
+            "breadcrumb_url" => "/company/recruitment-news",
             "jobs" => $jobs
         ]);
     }
@@ -28,7 +28,7 @@ class RecruitmentController extends Controller
     {
         return view('hr.create-recruitment-news', [
             "tab_name" => "Quản lý tin tuyển dụng",
-            "breadcrumb_url" => "/hr/recruitment-news",
+            "breadcrumb_url" => "/company/recruitment-news",
         ]);
     }
 
@@ -77,7 +77,7 @@ class RecruitmentController extends Controller
             DB::rollBack();
         }
 
-        return redirect('/hr/recruitment-news');
+        return redirect('/company/recruitment-news');
     }
 
     public function update($id)
@@ -103,7 +103,7 @@ class RecruitmentController extends Controller
 
         return view('hr.update-recruitment-news', [
             "tab_name" => "Quản lý tin tuyển dụng",
-            "breadcrumb_url" => "/hr/recruitment-news",
+            "breadcrumb_url" => "/company/recruitment-news",
             "job" => $job
         ]);
     }
@@ -144,7 +144,7 @@ class RecruitmentController extends Controller
 
         session()->flash('success', 'Cập nhật tin tuyển dụng thành công!');
 
-        return redirect('/hr/recruitment-news');
+        return redirect('/company/recruitment-news');
     }
 
     public function delete($id)
@@ -155,6 +155,6 @@ class RecruitmentController extends Controller
 
         session()->flash('success', 'Xóa tin tuyển dụng thành công!');
 
-        return redirect('/hr/recruitment-news');
+        return redirect('/company/recruitment-news');
     }
 }

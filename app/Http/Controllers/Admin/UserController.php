@@ -15,9 +15,9 @@ class UserController extends Controller
     public function list_users()
     {
         $users = User::where("role", "HR")->orWhere("role", "MANAGER")->get();
-        return view('admin.user-management', [
+        return view('admin.users', [
             "tab_name" => "Quản lý tài khoản",
-            "breadcrumb_url" => "/admin/user-management",
+            "breadcrumb_url" => "/company/users",
             "users" => $users
         ]);
     }
@@ -26,7 +26,7 @@ class UserController extends Controller
     {
         return view('admin.create-account', [
             "tab_name" => "Quản lý tài khoản",
-            "breadcrumb_url" => "/admin/user-management"
+            "breadcrumb_url" => "/company/users"
         ]);
     }
 
@@ -55,7 +55,7 @@ class UserController extends Controller
             DB::rollBack();
         }
 
-        return redirect('/admin/user-management');
+        return redirect('/company/users');
     }
 
     public function update($id)
@@ -64,7 +64,7 @@ class UserController extends Controller
 
         return view('admin.update-account', [
             "tab_name" => "Quản lý tài khoản",
-            "breadcrumb_url" => "/admin/user-management",
+            "breadcrumb_url" => "/company/users",
             "current_user" => $current_user
         ]);
     }
@@ -82,7 +82,7 @@ class UserController extends Controller
 
         session()->flash('success', 'Cập nhật tài khoản thành công!');
 
-        return redirect('/admin/user-management');
+        return redirect('/company/users');
     }
 
     public function delete($id)
@@ -93,6 +93,6 @@ class UserController extends Controller
 
         session()->flash('success', 'Xóa tài khoản thành công!');
 
-        return redirect('/admin/user-management');
+        return redirect('/company/users');
     }
 }

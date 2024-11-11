@@ -18,7 +18,7 @@ class CanidateController extends Controller
 
         return view('hr.applications', [
             "tab_name" => "Quản lý tin tuyển dụng",
-            "breadcrumb_url" => "/hr/recruitment-news",
+            "breadcrumb_url" => "/company/recruitment-news",
             'applications' => $applications
         ]);
     }
@@ -31,6 +31,6 @@ class CanidateController extends Controller
 
         session()->flash('success', 'Xóa ứng viên thành công!');
 
-        return redirect('/hr/applications');
+        return redirect('/company/applications');
     }
 }

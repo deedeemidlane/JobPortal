@@ -25,15 +25,13 @@ class SessionsController extends Controller
 
             switch ($user->role) {
                 case "ADMIN":
-                    return redirect('/admin/user-management');
+                    return redirect('/company/users');
                     break;
                 case "HR":
-                    return redirect('/hr/recruitment-news');
+                    return redirect('/company/recruitment-news');
                 default:
                     return redirect("/");
             }
-
-            return redirect('dashboard')->with(['success' => 'Đăng nhập thành công']);
         } else {
             return back()->withErrors(['error' => 'Email hoặc mật khẩu không đúng']);
         }

@@ -1,18 +1,3 @@
-<!--
-=========================================================
-* Soft UI Dashboard - v1.0.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 
 <html lang="en">
@@ -20,12 +5,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- <link rel="apple-touch-icon" sizes="76x76" href="/assets/admin/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="/assets/admin/img/favicon.png"> -->
   <title>
     Enuy - Job Portal Website
   </title>
-  <!--     Fonts and icons     -->
+  <!-- Fonts and icons -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
   <link href="/assets/admin/css/nucleo-icons.css" rel="stylesheet" />
@@ -34,10 +17,13 @@
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="/assets/admin/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  @vite(['resources/css/app.css','resources/js/app.js'])
   <link id="pagestyle" href="/assets/admin/css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Bootstrap icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -79,7 +65,7 @@
       "closeButton": true
     }
     toastr.success("{{session('success')}}", 'Thành công!', {
-      timeOut: 3000
+      timeOut: 1000
     });
   </script>
   @endif
