@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    const DISPLAYED_ROLE = ["HR" => "HR", "MANAGER" => "Trưởng phòng"];
+    const DISPLAYED_ROLE = ["ADMIN" => "ADMIN", "HR" => "HR", "MANAGER" => "Trưởng phòng"];
 
     /**
      * The attributes that are mass assignable.

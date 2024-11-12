@@ -13,9 +13,9 @@ class ProfileController extends Controller
     {
         $current_user = Auth::user();
 
-        return view('hr.profile', [
-            "tab_name" => "Quản lý tài khoản",
-            "breadcrumb_url" => "/company/profile",
+        return view('company.profile', [
+            "role" => User::DISPLAYED_ROLE[$current_user->role],
+            "breadcrumb_tabs" => ["Quản lý tài khoản" => ""],
             "current_user" => $current_user
         ]);
     }

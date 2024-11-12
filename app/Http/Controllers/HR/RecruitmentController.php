@@ -5,7 +5,9 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRecruitmentNewsRequest;
 use App\Models\Job;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class RecruitmentController extends Controller
@@ -17,18 +19,18 @@ class RecruitmentController extends Controller
             $job->application_count = $job->applications->count();
         }
 
-        return view('hr.recruitment-news', [
-            "tab_name" => "Quản lý tin tuyển dụng",
-            "breadcrumb_url" => "/company/recruitment-news",
+        return view('company.recruitment-news.index', [
+            "role" => User::DISPLAYED_ROLE[Auth::user()->role],
+            "breadcrumb_tabs" => ["Tin tuyển dụng" => ""],
             "jobs" => $jobs
         ]);
     }
 
     public function create()
     {
-        return view('hr.create-recruitment-news', [
-            "tab_name" => "Quản lý tin tuyển dụng",
-            "breadcrumb_url" => "/company/recruitment-news",
+        return view('company.recruitment-news.create', [
+            "role" => User::DISPLAYED_ROLE[Auth::user()->role],
+            "breadcrumb_tabs" => ["Tin tuyển dụng" => "/company/recruitment-news", "Đăng tin tuyển dụng" => ""],
         ]);
     }
 
@@ -101,9 +103,9 @@ class RecruitmentController extends Controller
         $job->start_time = $matches[3];
         $job->end_time = $matches[4];
 
-        return view('hr.update-recruitment-news', [
-            "tab_name" => "Quản lý tin tuyển dụng",
-            "breadcrumb_url" => "/company/recruitment-news",
+        return view('company.recruitment-news.update', [
+            "role" => User::DISPLAYED_ROLE[Auth::user()->role],
+            "breadcrumb_tabs" => ["Tin tuyển dụng" => "/company/recruitment-news", "Cập nhật tin tuyển dụng" => ""],
             "job" => $job
         ]);
     }

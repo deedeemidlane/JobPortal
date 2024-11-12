@@ -24,7 +24,9 @@ class RedirectIfAuthenticated
                     return redirect('/company/users');
                     break;
                 case "HR":
+                case "MANAGER":
                     return redirect('/company/recruitment-news');
+                    break;
                 default:
                     return redirect("/");
             }

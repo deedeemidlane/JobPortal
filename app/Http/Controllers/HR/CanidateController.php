@@ -4,7 +4,9 @@ namespace App\Http\Controllers\HR;
 
 use App\Http\Controllers\Controller;
 use App\Models\Application;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CanidateController extends Controller
 {
@@ -16,9 +18,9 @@ class CanidateController extends Controller
             $application->job_id = $application->job?->id;
         }
 
-        return view('hr.applications', [
-            "tab_name" => "Quản lý tin tuyển dụng",
-            "breadcrumb_url" => "/company/recruitment-news",
+        return view('company.applications.index', [
+            "role" => User::DISPLAYED_ROLE[Auth::user()->role],
+            "breadcrumb_tabs" => ["Tin tuyển dụng" => "/company/applications", "Quản lý ứng viên" => ""],
             'applications' => $applications
         ]);
     }

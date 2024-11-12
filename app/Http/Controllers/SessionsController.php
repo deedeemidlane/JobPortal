@@ -6,12 +6,13 @@ use App\Http\Requests\SignInRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\returnSelf;
 
 class SessionsController extends Controller
 {
     public function create()
     {
-        return view('session.login');
+        return view('company.login');
     }
 
     public function store(SignInRequest $request)
@@ -29,6 +30,10 @@ class SessionsController extends Controller
                     break;
                 case "HR":
                     return redirect('/company/recruitment-news');
+                    break;
+                case "MANAGER":
+                    return redirect('/company/campaigns');
+                    break;
                 default:
                     return redirect("/");
             }

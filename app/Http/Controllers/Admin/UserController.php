@@ -15,18 +15,18 @@ class UserController extends Controller
     public function list_users()
     {
         $users = User::where("role", "HR")->orWhere("role", "MANAGER")->get();
-        return view('admin.users', [
-            "tab_name" => "Quản lý tài khoản",
-            "breadcrumb_url" => "/company/users",
+        return view('company.users.index', [
+            "role" => "ADMIN",
+            "breadcrumb_tabs" => ["Quản lý tài khoản" => ""],
             "users" => $users
         ]);
     }
 
     public function create()
     {
-        return view('admin.create-account', [
-            "tab_name" => "Quản lý tài khoản",
-            "breadcrumb_url" => "/company/users"
+        return view('company.users.create', [
+            "role" => "ADMIN",
+            "breadcrumb_tabs" => ["Quản lý tài khoản" => "/company/users", "Tạo tài khoản" => ""],
         ]);
     }
 
@@ -51,7 +51,7 @@ class UserController extends Controller
 
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
             DB::rollBack();
         }
 
@@ -62,9 +62,9 @@ class UserController extends Controller
     {
         $current_user = User::where("id", $id)->first();
 
-        return view('admin.update-account', [
-            "tab_name" => "Quản lý tài khoản",
-            "breadcrumb_url" => "/company/users",
+        return view('company.users.update', [
+            "role" => "ADMIN",
+            "breadcrumb_tabs" => ["Quản lý tài khoản" => "/company/users", "Cập nhật tài khoản" => ""],
             "current_user" => $current_user
         ]);
     }
