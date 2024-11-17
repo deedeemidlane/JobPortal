@@ -4,6 +4,7 @@ namespace App\Http\Controllers\HR;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRecruitmentNewsRequest;
+use App\Models\Campaign;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class RecruitmentController extends Controller
     {
         $jobs = Job::orderByDesc('created_at')->get();
         foreach ($jobs as $job) {
+            $job->campaign = Campaign::where("id", $job->campaign_id)->first();
             $job->application_count = $job->applications->count();
         }
 
@@ -28,9 +30,12 @@ class RecruitmentController extends Controller
 
     public function create()
     {
+        $campaigns = Campaign::all();
+
         return view('company.recruitment-news.create', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
             "breadcrumb_tabs" => ["Tin tuyển dụng" => "/company/recruitment-news", "Đăng tin tuyển dụng" => ""],
+            "campaigns" => $campaigns
         ]);
     }
 

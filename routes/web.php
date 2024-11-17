@@ -32,12 +32,19 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
             Route::post('create', [UserController::class, 'post_create']);
             Route::get('update/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
             Route::post('update/{id}', [UserController::class, 'post_update'])->where('id', '[0-9]+');
-            Route::get('delete-account/{id}', [UserController::class, 'delete'])->where('id', '[0-9]+');
+            Route::get('delete/{id}', [UserController::class, 'delete'])->where('id', '[0-9]+');
         });
     });
 
     Route::prefix('campaigns')->middleware([AuthManager::class])->group(function () {
         Route::get('/', [CampaignController::class, 'list_campaigns']);
+        Route::get('create', [CampaignController::class, 'create']);
+        Route::post('create', [CampaignController::class, 'post_create']);
+        Route::post('add-job', [CampaignController::class, 'add_job']);
+        Route::post('remove-job', [CampaignController::class, 'remove_job']);
+        Route::get('/{id}', [CampaignController::class, 'update'])->where('id', '[0-9]+');
+        Route::post('update/{id}', [CampaignController::class, 'post_update'])->where('id', '[0-9]+');
+        Route::get('{id}/recruitment-news', [CampaignController::class, 'list_recruitment_news'])->where('id', '[0-9]+');
     });
 
     Route::prefix('recruitment-news')->group(function () {

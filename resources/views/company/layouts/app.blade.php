@@ -4,6 +4,7 @@
 @include('company.includes.head')
 
 <body class="g-sidenav-show bg-gray-100 relative">
+  @include('company.includes.script')
 
   @include('company.includes.sidebar')
   <main class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
@@ -12,8 +13,6 @@
       @yield('content')
     </div>
   </main>
-
-  @include('company.includes.script')
 
 </body>
 

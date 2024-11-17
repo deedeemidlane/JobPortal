@@ -14,6 +14,18 @@
     <div class="card-body p-4">
       <form action="/company/recruitment-news/create" method="POST" role="form text-left">
         @csrf
+        <div class="form-group">
+          <label for="campaign_id" class="text-sm">Chiến dịch tuyển dụng <span class="text-danger">*</span></label>
+          <select class="form-select" name="campaign_id" id="campaign_id">
+            <option value="" disabled selected>Chọn chiến dịch</option>
+            @foreach ($campaigns as $campaign)
+            <option value="{{$campaign->id}}">{{$campaign->name}}</option>
+            @endforeach
+          </select>
+          @error('campaign_id')
+          <p class="text-danger text-xs mt-2">{{ $message }}</p>
+          @enderror
+        </div>
         <div class="row">
           <div class="form-group">
             <label for="name" class="text-sm">Tiêu đề <span class="text-danger">*</span></label>
@@ -93,7 +105,7 @@
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                   <i class="bi bi-calendar-event-fill"></i>
                 </div>
-                <input id="datepicker-format" datepicker datepicker-format="dd/mm/yyyy" type="text" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="deadline" id="deadline" value="{{ old('deadline') }}">
+                <input id="datepicker-format" datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="deadline" id="deadline" value="{{ old('deadline') }}">
               </div>
               @error('deadline')
               <p class="text-danger text-xs mt-2">{{ $message }}</p>

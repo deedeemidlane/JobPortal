@@ -22,9 +22,10 @@ class CreateRecruitmentNewsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'max:50'],
-            'employment_type' => ['required'],
-            'position' => ['required'],
+            'campaign_id' => 'required',
+            'name' => 'required',
+            'employment_type' => 'required',
+            'position' => 'required',
             'deadline' => 'required',
             'description' => 'required',
             'requirement' => 'required',
@@ -41,6 +42,7 @@ class CreateRecruitmentNewsRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'campaign_id.required' => "Vui lòng chọn chiến dịch tuyển dụng",
             'name.required' => 'Tiêu đề không được để trống',
             'employment_type.required' => 'Vui lòng chọn hình thức',
             'position.required' => 'Vui lòng chọn cấp bậc',

@@ -7,11 +7,11 @@
     <div class="card-header pb-0 px-4">
       <div class="d-flex flex-row justify-content-between">
         <div>
-          <h5 class="mb-0">Danh sách tin tuyển dụng</h5>
+          <h5 class="mb-0">Danh sách vị trí tuyển dụng</h5>
         </div>
-        <a href="/company/recruitment-news/create" class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button">
+        <a href="/company/campaigns/{{$campaign->id}}/recruitment-news/create" class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button">
           <span class="text-md">+</span>
-          Đăng tin
+          Thêm
         </a>
       </div>
     </div>
@@ -45,14 +45,12 @@
                 <span class="text-dark  ms-sm-1">Lượt ứng tuyển: {{$job->application_count}}</span>
               </div>
             </div>
-            <div class="d-lg-flex gap-4 d-block mb-2">
+            <!-- <div class="d-lg-flex gap-4 d-block mb-2">
               <div class="mb-2 text-sm">
                 <i class="bi bi-megaphone-fill text-primary"></i>
-                <span class="text-dark  ms-sm-1">Chiến dịch tuyển dụng:
-                  <a href="/company/campaigns/{{$job->campaign->id}}" class="font-semibold">{{$job->campaign->name}}</a>
-                </span>
+                <span class="text-dark  ms-sm-1">Chiến dịch tuyển dụng: {{$campaign->name}}</span>
               </div>
-            </div>
+            </div> -->
             <div>
               <a href="#" class="bg-green-100 px-4 py-2 text-xs font-bold rounded-sm hover:text-green-700">
                 Xem CV ứng tuyển

@@ -6,27 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Job extends Model
+class Campaign extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'campaign_id',
         'name',
-        'employment_type',
-        'position',
-        'salary',
-        'deadline',
         'description',
+        'user_in_charge_id',
+        'start_time',
+        'end_time',
         'requirement',
-        'benefit',
-        'location',
-        'workplace',
-        'working_time'
+        'status'
     ];
 
-    public function applications(): HasMany
+    public function jobs(): HasMany
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(Job::class);
     }
 }

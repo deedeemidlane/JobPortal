@@ -160,6 +160,7 @@
 <div class="container-xxl pb-5">
     <div class="container">
         <!-- <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Việc làm tốt nhất</h1> -->
+        @if ($jobs->count() > 0)
         <div class="text-center wow fadeInUp" data-wow-delay="0.3s">
             <!-- <div class="tab-content"> -->
             <div class="fade show p-0 active">
@@ -188,6 +189,9 @@
             </div>
             <!-- </div> -->
         </div>
+        @else
+        <h3 class="text-center pt-5 wow fadeInUp" data-wow-delay="0.1s">Hiện không có tin tuyển dụng nào trên hệ thống</h3>
+        @endif
     </div>
 </div>
 <!-- Jobs End -->
