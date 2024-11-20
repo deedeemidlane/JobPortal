@@ -63,6 +63,13 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
 
     Route::prefix('interviews')->group(function () {
         Route::get('/', [InterviewController::class, 'list_interviews']);
+        // Route::get('pre-create', [InterviewController::class, 'pre_create']);
+        // Route::post('pre-create', [InterviewController::class, 'post_pre_create']);
+        Route::get('create', [InterviewController::class, 'create']);
+        Route::post('create', [InterviewController::class, 'post_create']);
+        Route::get('create/select-candidate', [InterviewController::class, 'select_candidate']);
+        Route::post('create/select-candidate', [InterviewController::class, 'post_select_candidate']);
+        Route::get('/{id}', [InterviewController::class, 'show'])->where('id', '[0-9]+');
     });
 
     Route::get('/profile', [ProfileController::class, 'update']);

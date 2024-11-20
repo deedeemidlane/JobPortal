@@ -5,24 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Application extends Model
+class InterviewCandidate extends Model
 {
     use HasFactory;
 
+    protected $table = 'interview_candidate';
+
     protected $fillable = [
-        'job_id',
+        'interview_id',
         'candidate_id'
     ];
-
-    public function job(): BelongsTo
-    {
-        return $this->belongsTo(Job::class);
-    }
 
     public function candidate(): BelongsTo
     {
         return $this->belongsTo(Candidate::class);
+    }
+
+    public function job(): BelongsTo
+    {
+        return $this->belongsTo(Job::class);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Candidate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApplyJobRequest;
 use App\Models\Application;
+use App\Models\Candidate;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,13 +64,18 @@ class JobController extends Controller
         DB::beginTransaction();
 
         try {
-            Application::create([
-                'job_id' => $current_job->id,
-                'candidate_name' => $validated['candidate_name'],
-                'candidate_email' => $validated['candidate_email'],
-                'candidate_phone' => $validated['candidate_phone'],
+            $new_candidate = Candidate::create([
+                'name' => $validated['candidate_name'],
+                'email' => $validated['candidate_email'],
+                'phone' => $validated['candidate_phone'],
                 'cv_path' => $cv_path,
                 'cover_letter' => $request->input('cover_letter'),
+                'status' => 'Ứng tuyển'
+            ]);
+
+            Application::create([
+                'job_id' => $current_job->id,
+                'candidate_id' => $new_candidate->id
             ]);
 
             session()->flash('success', 'Ứng tuyển thành công!');

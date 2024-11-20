@@ -37,16 +37,15 @@
               @foreach ($applications as $application)
               <tr>
                 <td class="ps-4">
-                  <p class="text-xs font-weight-bold mb-2">{{$application->candidate_name}}</p>
+                  <p class="text-xs font-weight-bold mb-2">{{$application->candidate->name}}</p>
                   <button class="text-xs bg-green-400 text-white py-1 px-2 rounded-sm"><i class="bi bi-eye"></i> Xem CV</button>
-                  <!-- <span class="text-xs bg-gray-500 text-white py-1 px-2 rounded-sm">Đã xem</span> -->
                 </td>
                 <td class="">
                   <a href=" /company/recruitment-news/update/{{$application->job_id}}" target="_blank" class="text-xs font-weight-bold mb-0">{{$application->job_title}}</a>
                 </td>
                 <td class="">
-                  <p class="text-xs mb-2"><i class="bi bi-envelope-at-fill"></i> {{$application->candidate_email}}</p>
-                  <p class="text-xs mb-0"><i class="bi bi-telephone-fill"></i> {{$application->candidate_phone}}</p>
+                  <p class="text-xs mb-2"><i class="bi bi-envelope-at-fill"></i> {{$application->candidate->email}}</p>
+                  <p class="text-xs mb-0"><i class="bi bi-telephone-fill"></i> {{$application->candidate->phone}}</p>
                 </td>
                 <td class="text-center">
                   <span class="text-secondary text-xs font-weight-bold">Trạng thái</span>
