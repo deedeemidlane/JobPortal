@@ -61,6 +61,7 @@ class RecruitmentController extends Controller
 
         try {
             Job::create([
+                'campaign_id' => $validated['campaign_id'],
                 'name' => $validated['name'],
                 'employment_type' => $validated['employment_type'],
                 'position' => $validated['position'],

@@ -98,7 +98,6 @@
                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                     @enderror
                   </div>
-
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">

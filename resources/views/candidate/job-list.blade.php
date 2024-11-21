@@ -18,132 +18,76 @@
 <!-- Header End -->
 
 <!-- Search Start -->
-<div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+<div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;" id="search_field">
     <div class="container">
-        <form method="POST" action="/job-search">
+        <form method="POST" action="/jobs">
+            @csrf
             <div class="row g-4">
                 <div class="col-md-10">
                     <div class="row g-4">
-                        <div class="col-md-4">
-                            <input type="text" class="form-control border-0" placeholder="Vị trí tuyển dụng" />
+                        <div class="col-md-8">
+                            <input type="text" name="title" value="{{$query_title}}" class="form-control border-0" placeholder="Vị trí tuyển dụng" />
                         </div>
                         <div class="col-md-4">
-                            <select class="form-select border-0">
-                                <option selected>Chọn địa điểm</option>
-                                <option value="Hà Nội">Hà Nội</option>
-                                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
-                                <option value="Bình Dương">Bình Dương</option>
-                                <option value="Bắc Ninh">Bắc Ninh</option>
-                                <option value="Đồng Nai">Đồng Nai</option>
-                                <option value="Hưng Yên">Hưng Yên</option>
-                                <option value="Hải Dương">Hải Dương</option>
-                                <option value="Đà Nẵng">Đà Nẵng</option>
-                                <option value="Hải Phòng">Hải Phòng</option>
-                                <option value="An Giang">An Giang</option>
-                                <option value="Bà Rịa-Vũng Tàu">Bà Rịa-Vũng Tàu</option>
-                                <option value="Bắc Giang">Bắc Giang</option>
-                                <option value="Bắc Kạn">Bắc Kạn</option>
-                                <option value="Bạc Liêu">Bạc Liêu</option>
-                                <option value="Bến Tre">Bến Tre</option>
-                                <option value="Bình Định">Bình Định</option>
-                                <option value="Bình Phước">Bình Phước</option>
-                                <option value="Bình Thuận">Bình Thuận</option>
-                                <option value="Cà Mau">Cà Mau</option>
-                                <option value="Cần Thơ">Cần Thơ</option>
-                                <option value="Cao Bằng">Cao Bằng</option>
-                                <option value="Cửu Long">Cửu Long</option>
-                                <option value="Đắk Lắk">Đắk Lắk</option>
-                                <option value="Đắc Nông">Đắc Nông</option>
-                                <option value="Điện Biên">Điện Biên</option>
-                                <option value="Đồng Tháp">Đồng Tháp</option>
-                                <option value="Gia Lai">Gia Lai</option>
-                                <option value="Hà Giang">Hà Giang</option>
-                                <option value="Hà Nam">Hà Nam</option>
-                                <option value="Hà Tĩnh">Hà Tĩnh</option>
-                                <option value="Hậu Giang">Hậu Giang</option>
-                                <option value="Hoà Bình">Hoà Bình</option>
-                                <option value="Khánh Hoà">Khánh Hoà</option>
-                                <option value="Kiên Giang">Kiên Giang</option>
-                                <option value="Kon Tum">Kon Tum</option>
-                                <option value="Lai Châu">Lai Châu</option>
-                                <option value="Lâm Đồng">Lâm Đồng</option>
-                                <option value="Lạng Sơn">Lạng Sơn</option>
-                                <option value="Lào Cai">Lào Cai</option>
-                                <option value="Long An">Long An</option>
-                                <option value="Miền Bắc">Miền Bắc</option>
-                                <option value="Miền Nam">Miền Nam</option>
-                                <option value="Miền Trung">Miền Trung</option>
-                                <option value="Nam Định">Nam Định</option>
-                                <option value="Nghệ An">Nghệ An</option>
-                                <option value="Ninh Bình">Ninh Bình</option>
-                                <option value="Ninh Thuận">Ninh Thuận</option>
-                                <option value="Phú Thọ">Phú Thọ</option>
-                                <option value="Phú Yên">Phú Yên</option>
-                                <option value="Quảng Bình">Quảng Bình</option>
-                                <option value="Quảng Nam">Quảng Nam</option>
-                                <option value="Quảng Ngãi">Quảng Ngãi</option>
-                                <option value="Quảng Ninh">Quảng Ninh</option>
-                                <option value="Quảng Trị">Quảng Trị</option>
-                                <option value="Sóc Trăng">Sóc Trăng</option>
-                                <option value="Sơn La">Sơn La</option>
-                                <option value="Tây Ninh">Tây Ninh</option>
-                                <option value="Thái Bình">Thái Bình</option>
-                                <option value="Thái Nguyên">Thái Nguyên</option>
-                                <option value="Thanh Hoá">Thanh Hoá</option>
-                                <option value="Thừa Thiên Huế">Thừa Thiên Huế</option>
-                                <option value="Tiền Giang">Tiền Giang</option>
-                                <option value="Toàn Quốc">Toàn Quốc</option>
-                                <option value="Trà Vinh">Trà Vinh</option>
-                                <option value="Tuyên Quang">Tuyên Quang</option>
-                                <option value="Vĩnh Long">Vĩnh Long</option>
-                                <option value="Vĩnh Phúc">Vĩnh Phúc</option>
-                                <option value="Yên Bái">Yên Bái</option>
-                                <option value="Nước Ngoài">Nước Ngoài</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <select class="form-select border-0">
-                                <option selected>Chọn ngành nghề</option>
-                                <option value="1">Location 1</option>
-                                <option value="2">Location 2</option>
-                                <option value="3">Location 3</option>
+                            @php
+                            $provinces = [
+                            "Hà Nội", "Hồ Chí Minh", "Bình Dương", "Bắc Ninh", "Đồng Nai", "Hưng Yên", "Hải Dương", "Đà Nẵng",
+                            "Hải Phòng", "An Giang", "Bà Rịa-Vũng Tàu", "Bắc Giang", "Bắc Kạn", "Bạc Liêu", "Bến Tre",
+                            "Bình Định", "Bình Phước", "Bình Thuận", "Cà Mau", "Cần Thơ", "Cao Bằng", "Đắk Lắk",
+                            "Đắk Nông", "Điện Biên", "Đồng Tháp", "Gia Lai", "Hà Giang", "Hà Nam", "Hà Tĩnh",
+                            "Hậu Giang", "Hoà Bình", "Khánh Hoà", "Kiên Giang", "Kon Tum", "Lai Châu", "Lâm Đồng",
+                            "Lạng Sơn", "Lào Cai", "Long An", "Nam Định", "Nghệ An", "Ninh Bình", "Ninh Thuận",
+                            "Phú Thọ", "Phú Yên", "Quảng Bình", "Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị",
+                            "Sóc Trăng", "Sơn La", "Tây Ninh", "Thái Bình", "Thái Nguyên", "Thanh Hoá", "Thừa Thiên Huế",
+                            "Tiền Giang", "Trà Vinh", "Tuyên Quang", "Vĩnh Long", "Vĩnh Phúc", "Yên Bái"
+                            ];
+                            @endphp
+                            <select class="form-select border-0" name="location">
+                                <option value="" selected>Chọn địa điểm</option>
+                                @foreach($provinces as $province)
+                                <option value="{{$province}}" @if($query_location=="$province" ) selected @endif>{{$province}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-md-2">
-                    <button class="btn btn-dark border-0 w-100" type="submit">Tìm kiếm</button>
-                </div> -->
-
                 <div class="col-md-10">
                     <div class="row g-4">
                         <div class="col-md-4">
-                            <select class="form-select border-0">
-                                <option selected>Chức vụ</option>
-                                <option value="1">Chức vụ 1</option>
-                                <option value="2">Chức vụ 2</option>
-                                <option value="3">Chức vụ 3</option>
+                            <select class="form-select" name="employment_type" id="employment_type">
+                                <option value="">Chọn hình thức</option>
+                                <option value="Toàn thời gian" @if($query_employment_type=="Toàn thời gian" ) selected @endif>Toàn thời gian</option>
+                                <option value="Bán thời gian" @if($query_employment_type=="Bán thời gian" ) selected @endif>Bán thời gian</option>
+                                <option value="Thực tập" @if($query_employment_type=="Thực tập" ) selected @endif>Thực tập</option>
                             </select>
                         </div>
+                        @php
+                        $levels = ["Nhân viên","Trưởng nhóm","Trưởng/Phó phòng","Quản lý/Giám sát", "Trưởng chi nhánh", "Phó giám đốc", "Giám đốc", "Thực tập sinh"];
+                        @endphp
                         <div class="col-md-4">
-                            <select class="form-select border-0">
-                                <option selected>Mức lương</option>
-                                <option value="">Dưới 10 triệu</option>
-                                <option value="">10 - 15 triệu</option>
-                                <option value="">25 - 20 triệu</option>
-                                <option value="">25 - 30 triệu</option>
-                                <option value="">30 - 50 triệu</option>
-                                <option value="">Trên 50 triệu</option>
-                                <option value="">Thỏa thuận</option>
+                            <select class="form-select" name="position" id="position">
+                                <option value="">Chọn cấp bậc</option>
+                                @foreach($levels as $level)
+                                <option value="{{$level}}" @if($query_position==$level) selected @endif>{{$level}}</option>
+                                @endforeach
                             </select>
                         </div>
-                        <div class="col-md-4">
-                            <select class="form-select border-0">
-                                <option selected>Trình độ</option>
-                                <option value="1">Trình độ 1</option>
-                                <option value="2">Trình độ 2</option>
-                                <option value="3">Trình độ 3</option>
-                            </select>
+                        <div class="col-md-4 position-relative">
+                            <input type="text" readonly id="salary_input" class="form-control bg-white border-0" placeholder="Mức lương" value="{{$salary_display_input}}" />
+                            <div class="w-100 bg-white position-absolute border border-2 rounded mt-2 p-4 d-none" id="salary_dropdown">
+                                <div class="d-flex gap-2 align-items-center pe-2">
+                                    <input type="number" id="min_salary" name="min_salary" value="{{$query_min_salary}}" class="form-control" placeholder="Từ" />
+                                    <div>-</div>
+                                    <input type="number" id="max_salary" name="max_salary" value="{{$query_max_salary}}" class="form-control" placeholder="Đến" />
+                                    <div>triệu</div>
+                                </div>
+                                <button type="button" id="salary_save_btn" class="btn btn-primary py-1 w-100 mt-2">Áp dụng</button>
+
+                                <hr>
+                                <div>Khác</div>
+                                <input type="hidden" name="negotiable" id="negotiable_input" value="{{$query_negotiable}}" />
+                                <button type="button" id="salary_negotiable_btn" class="btn btn-info text-white py-1 w-100 mt-2">Thỏa thuận</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -189,8 +133,10 @@
             </div>
             <!-- </div> -->
         </div>
-        @else
+        @elseif ($is_jobs_empty === 0)
         <h3 class="text-center pt-5 wow fadeInUp" data-wow-delay="0.1s">Hiện không có tin tuyển dụng nào trên hệ thống</h3>
+        @else
+        <h3 class="text-center pt-5 wow fadeInUp" data-wow-delay="0.1s">Không tìm thấy công việc phù hợp</h3>
         @endif
     </div>
 </div>
@@ -198,6 +144,45 @@
 
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+<script>
+    const salaryInput = document.getElementById('salary_input');
+    const dropdown = document.getElementById('salary_dropdown');
+
+    salaryInput.addEventListener("click", function() {
+        dropdown.classList.toggle("d-none");
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!dropdown.contains(event.target) && event.target !== salaryInput) {
+            dropdown.classList.add('d-none');
+        }
+    });
+
+    document.getElementById("salary_save_btn").addEventListener("click", function() {
+        const minSalary = document.getElementById('min_salary').value;
+        const maxSalary = document.getElementById('max_salary').value;
+
+        if (minSalary && maxSalary && minSalary >= 0 && maxSalary > 0 && parseInt(minSalary) <= parseInt(maxSalary)) {
+            if (parseInt(minSalary) == parseInt(maxSalary)) {
+                salaryInput.value = `${minSalary} triệu`;
+            } else {
+                salaryInput.value = `${minSalary} - ${maxSalary} triệu`;
+            }
+
+            document.getElementById("negotiable_input").value = 0;
+            dropdown.classList.toggle("d-none");
+        } else {
+            alert("Vui lòng chọn múc lương hợp lệ");
+        }
+    });
+
+    document.getElementById("salary_negotiable_btn").addEventListener("click", function() {
+        salaryInput.value = `Thỏa thuận`;
+        document.getElementById("negotiable_input").value = 1;
+        dropdown.classList.add("d-none");
+    });
+</script>
 
 
 @endsection

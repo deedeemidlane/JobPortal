@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [JobController::class, 'home']);
 Route::get('/jobs', [JobController::class, 'list_jobs']);
+Route::post('/jobs', [JobController::class, 'search_jobs']);
 Route::get('/jobs/{id}', [JobController::class, 'job_detail'])->where('id', '[0-9]+');
 Route::post('/jobs/{id}', [JobController::class, 'apply'])->where('id', '[0-9]+');
 

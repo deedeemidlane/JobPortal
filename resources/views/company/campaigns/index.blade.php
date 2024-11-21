@@ -71,7 +71,7 @@
                     <span class="text-secondary text-xs font-weight-bold">{{ date("d/m/Y", strtotime($campaign->created_at)) }}</span>
                   </td>
                   <td class="text-center">
-                    <a href="/company/campaigns/update/{{$campaign->id}}" class="me-2">
+                    <a href="/company/campaigns/{{$campaign->id}}" class="me-2">
                       <i class="fas fa-user-edit text-blue"></i>
                     </a>
                     <span type="button" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$campaign->id}}">
