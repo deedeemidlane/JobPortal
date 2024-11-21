@@ -43,8 +43,9 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
         Route::post('create', [CampaignController::class, 'post_create']);
         Route::post('add-job', [CampaignController::class, 'add_job']);
         Route::post('remove-job', [CampaignController::class, 'remove_job']);
-        Route::get('/{id}', [CampaignController::class, 'update'])->where('id', '[0-9]+');
-        Route::post('update/{id}', [CampaignController::class, 'post_update'])->where('id', '[0-9]+');
+        Route::get('/{id}', [CampaignController::class, 'show'])->where('id', '[0-9]+');
+        Route::post('/{id}/update', [CampaignController::class, 'post_update'])->where('id', '[0-9]+');
+        Route::get('{id}/delete', [CampaignController::class, 'delete'])->where('id', '[0-9]+');
         Route::get('{id}/recruitment-news', [CampaignController::class, 'list_recruitment_news'])->where('id', '[0-9]+');
     });
 

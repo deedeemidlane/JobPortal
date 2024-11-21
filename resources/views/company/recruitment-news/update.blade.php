@@ -14,6 +14,15 @@
     <div class="card-body p-4">
       <form action="/company/recruitment-news/update/{{$job->id}}" method="POST" role="form text-left">
         @csrf
+        <div class="form-group">
+          <label for="campaign_id" class="text-sm">Chiến dịch tuyển dụng <span class="text-danger">*</span></label>
+          <select class="form-select" name="campaign_id" id="campaign_id" aria-disabled="true">
+            <option value="{{$job->campaign->id}}" selected>{{$job->campaign->name}}</option>
+          </select>
+          @error('campaign_id')
+          <p class="text-danger text-xs mt-2">{{ $message }}</p>
+          @enderror
+        </div>
         <div class="row">
           <div class="form-group">
             <label for="name" class="text-sm">Tiêu đề <span class="text-danger">*</span></label>
@@ -227,7 +236,7 @@
           </div>
         </div>
         <div class="d-flex justify-content-end mt-5">
-          <button type="submit" class="btn bg-primary w-full text-white btn-md">Đăng tin</button>
+          <button type="submit" class="btn bg-primary w-full text-white btn-md">Cập nhật</button>
         </div>
       </form>
     </div>

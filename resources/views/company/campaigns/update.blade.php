@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="card-body pt-4">
-          <form action="/company/campaigns/create" method="POST" role="form text-left">
+          <form action="/company/campaigns/{{$campaign->id}}/update" method="POST" role="form text-left">
             @csrf
             <div class="row">
               <div class="col-md-6 pe-md-5">

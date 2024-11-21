@@ -121,7 +121,7 @@ class CampaignController extends Controller
         $request->session()->put("jobs", $request->input("new_job_list"));
     }
 
-    public function update($id)
+    public function show($id)
     {
         $user = Auth::user();
         $managers = User::where('role', "MANAGER")->get();
@@ -135,6 +135,19 @@ class CampaignController extends Controller
             "campaign" => $campaign,
             "jobs" => $jobs
         ]);
+    }
+
+    public function post_update($id)
+    {
+        echo $id;
+    }
+
+    public function delete($id)
+    {
+        $campaign = Campaign::findOrFail($id);
+        $campaign->delete();
+        session()->flash('success', 'Xóa chiến dịch thành công!');
+        return redirect('/company/campaigns');
     }
 
     public function list_recruitment_news($id)

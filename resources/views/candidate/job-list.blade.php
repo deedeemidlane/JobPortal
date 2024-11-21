@@ -74,7 +74,7 @@
                         </div>
                         <div class="col-md-4 position-relative">
                             <input type="text" readonly id="salary_input" class="form-control bg-white border-0" placeholder="Mức lương" value="{{$salary_display_input}}" />
-                            <div class="w-100 bg-white position-absolute border border-2 rounded mt-2 p-4 d-none" id="salary_dropdown">
+                            <div class="w-100 bg-white position-absolute border rounded mt-2 p-4 d-none" id="salary_dropdown">
                                 <div class="d-flex gap-2 align-items-center pe-2">
                                     <input type="number" id="min_salary" name="min_salary" value="{{$query_min_salary}}" class="form-control" placeholder="Từ" />
                                     <div>-</div>

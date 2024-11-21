@@ -92,7 +92,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <a href="/company/campaigns/delete/{{$campaign->id}}" type="button" class="btn btn-danger">Xóa</a>
+                        <a href="/company/campaigns/{{$campaign->id}}/delete" type="button" class="btn btn-danger">Xóa</a>
                       </div>
                     </div>
                   </div>
