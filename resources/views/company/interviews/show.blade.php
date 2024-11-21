@@ -160,7 +160,7 @@
                       </td>
                       <td class="text-center">
                         <p class="text-xs font-weight-bold mb-0">
-                          @if ($candidate->status === "Ứng tuyển" || $candidate->status === "Trúng tuyển")
+                          @if ($candidate->status === "Trúng tuyển")
                           <span class="bg-green-400 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
                           @elseif ($candidate->status === "Không trúng tuyển")
                           <span class="bg-gray-400 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
@@ -178,11 +178,33 @@
                 </table>
               </div>
             </div>
-            <div class="d-flex justify-content-end">
-              <button type="submit" class="btn bg-primary text-white btn-md mt-4 mb-4">Lưu</button>
+            <div class="d-flex justify-content-end gap-4">
+              <button type="button" class="btn btn-danger btn-md my-4" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$interview->id}}">
+                Xóa
+              </button>
+              <button type="submit" class="btn bg-info text-white btn-md my-4">Cập nhật</button>
             </div>
           </form>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmModal-{{$interview->id}}" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="confirmModalLabel-{{$interview->id}}">Xác nhận xóa</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6 class="mb-0 text-danger">Bạn có chắc chắn muốn xóa lịch phỏng vấn này?</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <a href="/company/interviews/{{$interview->id}}/delete" type="button" class="btn btn-danger">Xóa</a>
       </div>
     </div>
   </div>

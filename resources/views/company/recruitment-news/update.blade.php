@@ -14,6 +14,7 @@
     <div class="card-body p-4">
       <form action="/company/recruitment-news/update/{{$job->id}}" method="POST" role="form text-left">
         @csrf
+        <input type="hidden" name="query" value="{{$query}}">
         <div class="form-group">
           <label for="campaign_id" class="text-sm">Chiến dịch tuyển dụng <span class="text-danger">*</span></label>
           <select class="form-select" name="campaign_id" id="campaign_id" aria-disabled="true">

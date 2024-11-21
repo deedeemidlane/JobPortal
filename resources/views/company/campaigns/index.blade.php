@@ -72,34 +72,10 @@
                   </td>
                   <td class="text-center">
                     <a href="/company/campaigns/{{$campaign->id}}" class="me-2">
-                      <i class="fas fa-user-edit text-blue"></i>
+                      <i class="fa-solid fa-up-right-from-square"></i>
                     </a>
-                    <span type="button" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$campaign->id}}">
-                      <i class="cursor-pointer fas fa-trash text-danger"></i>
-                    </span>
                 </tr>
-                <!-- Modal -->
-                <div class="modal fade" id="confirmModal-{{$campaign->id}}" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="confirmModalLabel-{{$campaign->id}}">Xác nhận xóa</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <p class="text-black">Xóa chiến dịch sẽ đồng thời xóa tất cả tin tuyển dụng thuộc chiến dịch này.</p>
-                        <h6 class="mb-0 text-danger">Bạn có chắc chắc muốn xóa chiến dịch này?</h6>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <a href="/company/campaigns/{{$campaign->id}}/delete" type="button" class="btn btn-danger">Xóa</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
                 @endforeach
-
               </tbody>
             </table>
             @if($campaigns->count() == 0)

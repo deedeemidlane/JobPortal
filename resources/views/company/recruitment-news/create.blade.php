@@ -14,13 +14,18 @@
     <div class="card-body p-4">
       <form action="/company/recruitment-news/create" method="POST" role="form text-left">
         @csrf
+        <input type="hidden" name="query" value="{{$query}}">
         <div class="form-group">
           <label for="campaign_id" class="text-sm">Chiến dịch tuyển dụng <span class="text-danger">*</span></label>
           <select class="form-select" name="campaign_id" id="campaign_id">
+            @if (isset($current_campaign))
+            <option value="{{$current_campaign->id}}" selected>{{$current_campaign->name}}</option>
+            @else
             <option value="" disabled selected>Chọn chiến dịch</option>
             @foreach ($campaigns as $campaign)
             <option value="{{$campaign->id}}">{{$campaign->name}}</option>
             @endforeach
+            @endif
           </select>
           @error('campaign_id')
           <p class="text-danger text-xs mt-2">{{ $message }}</p>

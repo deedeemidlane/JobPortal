@@ -5,17 +5,33 @@
 <div class="mx-4">
   <div class="card mb-4">
     <div class="card-header pb-0 px-4">
-      <div class="d-flex flex-row justify-content-between">
+      <div class="d-flex justify-content-between align-content-start">
         <div>
-          <h5 class="mb-0">Danh sách tin tuyển dụng</h5>
+          <h5 class="mb-2">Danh sách tin tuyển dụng</h5>
+          <div class="mb-2 text-sm">
+            <i class="bi bi-megaphone-fill text-primary"></i>
+            <span class="text-dark ms-sm-1">Chiến dịch tuyển dụng:
+              @if (isset($campaign))
+              <a href="/company/campaigns/{{$campaign->id}}" class="font-semibold">
+                {{$campaign->name}}
+              </a>
+              @else
+              <span class="font-semibold">Tất cả</span>
+              @endif
+            </span>
+          </div>
         </div>
-        <a href="/company/recruitment-news/create" class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button">
-          <span class="text-md">+</span>
-          Đăng tin
-        </a>
+        <div>
+          <a href="/company/recruitment-news/create{{$query}}"
+            class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4"
+            type="button">
+            <span class="text-md">+</span>
+            Đăng tin
+          </a>
+        </div>
       </div>
     </div>
-    <div class="card-body p-4">
+    <div class="card-body p-4 pt-2">
       <ul class="list-group">
         @foreach($jobs as $job)
         <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
@@ -54,13 +70,13 @@
               </div>
             </div>
             <div>
-              <a href="#" class="bg-green-100 px-4 py-2 text-xs font-bold rounded-sm hover:text-green-700">
-                Xem CV ứng tuyển
-              </a>
+              <!-- <a href="/company/applications?job-id={{$job->id}}" class="bg-green-100 px-4 py-2 text-xs font-bold rounded-sm hover:text-green-700">
+                Xem danh sách ứng viên
+              </a> -->
             </div>
           </div>
           <div class="ms-auto text-end">
-            <a class="btn btn-link text-dark px-3 mb-0 d-block d-lg-inline-block" href="/company/recruitment-news/update/{{$job->id}}">
+            <a class="btn btn-link text-dark px-3 mb-0 d-block d-lg-inline-block" href="/company/recruitment-news/update/{{$job->id}}{{$query}}">
               <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Chỉnh sửa
             </a>
             <button class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$job->id}}">
@@ -89,7 +105,11 @@
         @endforeach
       </ul>
       @if($jobs->count() == 0)
+      @if (isset($campaign))
+      <div class="text-center py-2">Chiến dịch này chưa có tin tuyển dụng nào</div>
+      @else
       <div class="text-center py-2">Không có tin tuyển dụng nào trên hệ thống</div>
+      @endif
       @endif
     </div>
   </div>

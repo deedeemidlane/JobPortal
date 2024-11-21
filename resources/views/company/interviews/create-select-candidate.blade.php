@@ -52,7 +52,7 @@
                 </td>
                 <td class="text-center">
                   <p class="text-xs font-weight-bold mb-0">
-                    @if ($candidate->status === "Ứng tuyển" || $candidate->status === "Trúng tuyển")
+                    @if ($candidate->status === "Trúng tuyển")
                     <span class="bg-green-400 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
                     @elseif ($candidate->status === "Không trúng tuyển")
                     <span class="bg-gray-400 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>

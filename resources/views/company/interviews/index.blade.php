@@ -76,6 +76,7 @@
                     <a href="/company/interviews/{{$interview->id}}" class="me-2">
                       <i class="fa-solid fa-up-right-from-square"></i>
                     </a>
+                  </td>
                 </tr>
                 @endforeach
               </tbody>

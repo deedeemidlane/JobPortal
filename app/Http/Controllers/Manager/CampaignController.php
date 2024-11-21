@@ -128,7 +128,7 @@ class CampaignController extends Controller
         $campaign = Campaign::findOrFail($id);
         $jobs = $campaign->jobs;
 
-        return view('company.campaigns.update', [
+        return view('company.campaigns.show', [
             "role" => User::DISPLAYED_ROLE[$user->role],
             "breadcrumb_tabs" => ["Chiến dịch tuyển dụng" => "/company/campaigns", $campaign->name => ""],
             "managers" => $managers,

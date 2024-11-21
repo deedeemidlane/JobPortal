@@ -41,25 +41,36 @@
                   <button class="text-xs bg-green-400 text-white py-1 px-2 rounded-sm"><i class="bi bi-eye"></i> Xem CV</button>
                 </td>
                 <td class="">
-                  <a href=" /company/recruitment-news/update/{{$application->job_id}}" target="_blank" class="text-xs font-weight-bold mb-0">{{$application->job_title}}</a>
+                  <div class="text-xs font-weight-bold mb-0">{{$application->job_title}}</div>
                 </td>
                 <td class="">
                   <p class="text-xs mb-2"><i class="bi bi-envelope-at-fill"></i> {{$application->candidate->email}}</p>
                   <p class="text-xs mb-0"><i class="bi bi-telephone-fill"></i> {{$application->candidate->phone}}</p>
                 </td>
                 <td class="text-center">
-                  <span class="text-secondary text-xs font-weight-bold">Trạng thái</span>
+                  <p class="text-xs font-weight-bold mb-0">
+                    @if ($application->candidate->status === "Trúng tuyển")
+                    <span class="bg-green-400 text-white py-0.5 px-2 rounded">{{$application->candidate->status}}</span>
+                    @elseif ($application->candidate->status === "Không trúng tuyển")
+                    <span class="bg-gray-400 text-white py-0.5 px-2 rounded">{{$application->candidate->status}}</span>
+                    @else
+                    <span class="bg-yellow-200 text-gray-600 py-0.5 px-2 rounded">{{$application->candidate->status}}</span>
+                    @endif
+                  </p>
                 </td>
                 <td class="text-center">
                   <span class="text-secondary text-xs font-weight-bold">{{ date("d/m/Y  h:i", strtotime($application->created_at)) }}</span>
                 </td>
                 <td class="text-left text-xs">
-                  <a class="text-blue-400 mb-2 p-0 text-start text-xs font-bold hover:text-blue-500" href="">
+                  <!-- <a class="text-blue-400 mb-2 p-0 text-start text-xs font-bold hover:text-blue-500" href="">
                     <i class="fas fa-pencil-alt me-2" aria-hidden="true"></i>Chỉnh sửa
                   </a>
                   <button class="text-red-400 hover:text-red-500 mt-2 d-block p-0 text-start font-bold" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$application->id}}">
                     <i class="far fa-trash-alt me-2"></i>Xóa
-                  </button>
+                  </button> -->
+                  <a href="/company/applications/{{$application->id}}" class="me-2 text-md">
+                    <i class="fa-solid fa-up-right-from-square"></i>
+                  </a>
                 </td>
               </tr>
 

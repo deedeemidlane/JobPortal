@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class RecruitmentController extends Controller
 {
-    public function list_recruitment_news()
+    public function list_recruitment_news(Request $request)
     {
         $jobs = Job::orderByDesc('created_at')->get();
         foreach ($jobs as $job) {
@@ -21,21 +21,42 @@ class RecruitmentController extends Controller
             $job->application_count = $job->applications->count();
         }
 
+        $campaign = $request->query('campaign-id') ? Campaign::findOrFail($request->query('campaign-id')) : null;
+
+        if (!is_null($campaign)) {
+            $jobs = $jobs->filter(function ($job) use ($campaign) {
+                return $job->campaign->id === $campaign->id;
+            });
+        }
+
+        $query = $campaign ? "?campaign-id=" . $campaign->id : "";
+
         return view('company.recruitment-news.index', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
             "breadcrumb_tabs" => ["Tin tuyển dụng" => ""],
-            "jobs" => $jobs
+            "jobs" => $jobs,
+            "campaign" => $campaign,
+            "query" => $query
         ]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $campaigns = Campaign::all();
 
+        $current_campaign = $request->query('campaign-id') ? Campaign::findOrFail($request->query('campaign-id')) : null;
+
+        $query = $current_campaign ? "?campaign-id=" . $current_campaign->id : "";
+
         return view('company.recruitment-news.create', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
-            "breadcrumb_tabs" => ["Tin tuyển dụng" => "/company/recruitment-news", "Đăng tin tuyển dụng" => ""],
-            "campaigns" => $campaigns
+            "breadcrumb_tabs" => [
+                "Tin tuyển dụng" => is_null($current_campaign) ? "/company/recruitment-news" : "/company/recruitment-news?campaign-id=" . $current_campaign->id,
+                "Đăng tin tuyển dụng" => ""
+            ],
+            "campaigns" => $campaigns,
+            "current_campaign" => $current_campaign,
+            "query" => $query
         ]);
     }
 
@@ -85,10 +106,10 @@ class RecruitmentController extends Controller
             DB::rollBack();
         }
 
-        return redirect('/company/recruitment-news');
+        return redirect('/company/recruitment-news' . $request->input('query'));
     }
 
-    public function update($id)
+    public function update($id, Request $request)
     {
         $job = Job::findOrFail($id);
 
@@ -109,10 +130,15 @@ class RecruitmentController extends Controller
         $job->start_time = $matches[3];
         $job->end_time = $matches[4];
 
+        $campaign = $request->query('campaign-id') ? Campaign::findOrFail($request->query('campaign-id')) : null;
+
+        $query = $campaign ? "?campaign-id=" . $campaign->id : "";
+
         return view('company.recruitment-news.update', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
-            "breadcrumb_tabs" => ["Tin tuyển dụng" => "/company/recruitment-news", "Cập nhật tin tuyển dụng" => ""],
-            "job" => $job
+            "breadcrumb_tabs" => ["Tin tuyển dụng" => "/company/recruitment-news" . $query, "Cập nhật tin tuyển dụng" => ""],
+            "job" => $job,
+            "query" => $query
         ]);
     }
 
@@ -152,13 +178,12 @@ class RecruitmentController extends Controller
 
         session()->flash('success', 'Cập nhật tin tuyển dụng thành công!');
 
-        return redirect('/company/recruitment-news');
+        return redirect('/company/recruitment-news' . $request->input("query"));
     }
 
     public function delete($id)
     {
         $job = Job::findOrFail($id);
-
         $job->delete();
 
         session()->flash('success', 'Xóa tin tuyển dụng thành công!');
