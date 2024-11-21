@@ -20,7 +20,7 @@
               <div class="col-md-6 pe-md-5">
                 <div class="form-group">
                   <label for="name" class="text-sm">Tên lịch phỏng vấn <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" placeholder="Tên lịch phỏng vấn" name="name" id="name" value="{{ old('name') }}">
+                  <input type="text" class="form-control" placeholder="Tên lịch phỏng vấn" name="name" id="name" value="{{ $interview->name }}">
                   @error('name')
                   <p class="text-danger text-xs mt-2">{{ $message }}</p>
                   @enderror
@@ -29,8 +29,12 @@
                   <label for="type" class="text-sm">Vòng phỏng vấn <span class="text-danger">*</span></label>
                   <select class="form-select" name="type" id="type">
                     <option value="" disabled selected>Chọn vòng phỏng vấn</option>
-                    <option value="Phỏng vấn chuyên sâu">Phỏng vấn chuyên sâu (online)</option>
-                    <option value="Phỏng vấn doanh nghiệp">Phỏng vấn doanh nghiệp (offline)</option>
+                    <option value="Phỏng vấn chuyên sâu" @if ($interview->type === "Phỏng vấn chuyên sâu") selected @endif>
+                      Phỏng vấn chuyên sâu (online)
+                    </option>
+                    <option value="Phỏng vấn doanh nghiệp" @if ($interview->type === "Phỏng vấn doanh nghiệp") selected @endif>
+                      Phỏng vấn doanh nghiệp (offline)
+                    </option>
                   </select>
                   @error('type')
                   <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -48,7 +52,7 @@
                       <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <i class="bi bi-calendar-event-fill"></i>
                       </div>
-                      <input id="datepicker-range-start" datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="date" id="date" value="{{ old('date') }}">
+                      <input id="datepicker-range-start" datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="date" id="date" value="{{ $interview->date }}">
                     </div>
                   </div>
                   @error('date')
@@ -63,7 +67,7 @@
                             <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z" clip-rule="evenodd" />
                           </svg>
                         </div>
-                        <input type="time" value="08:00" class="form-control p-2" placeholder="0" name="start_time" id="start_time" value="{{ old('start_time') }}">
+                        <input type="time" value="{{ $interview->start_time }}" class="form-control p-2" placeholder="0" name="start_time" id="start_time" value="{{ old('start_time') }}">
                       </div>
                     </div>
                     <div class="col-md-auto d-flex align-items-center gap-3">
@@ -74,7 +78,7 @@
                             <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z" clip-rule="evenodd" />
                           </svg>
                         </div>
-                        <input type="time" value="17:00" class="form-control p-2" placeholder="0" name="end_time" id="end_time" value="{{ old('end_time') }}">
+                        <input type="time" value="{{ $interview->end_time }}" class="form-control p-2" placeholder="0" name="end_time" id="end_time" value="{{ old('end_time') }}">
                       </div>
                     </div>
                   </div>
@@ -84,11 +88,12 @@
             <div class="row items-end" id="interviewer_list">
               <label for="" class="text-sm">Danh sách người phỏng vấn <span class="text-danger">*</span></label>
               <input type="hidden" name="interviewer_indices" id="interviewer_indices">
+              @foreach($interview->interviewers as $interviewer)
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="interviewer_name">Họ và tên <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" placeholder="Họ và tên" name="interviewer_name" id="interviewer_name" value="{{ old('interviewer_name') }}">
+                    <input type="text" class="form-control" placeholder="Họ và tên" name="interviewer_name" id="interviewer_name" value="{{ $interviewer['name'] }}">
                     @error('interviewer_name')
                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                     @enderror
@@ -98,14 +103,14 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="interviewer_email">Email <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" placeholder="Email" name="interviewer_email" id="interviewer_email" value="{{ old('interviewer_email') }}">
+                    <input type="text" class="form-control" placeholder="Email" name="interviewer_email" id="interviewer_email" value="{{ $interviewer['email'] }}">
                     @error('interviewer_email')
                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                     @enderror
                   </div>
-
                 </div>
               </div>
+              @endforeach
             </div>
             <button class="bg-blue-500 text-white font-bold btn-sm d-flex align-items-center gap-2 px-3 py-1 mb-3 hover:opacity-90 rounded-full" type="button" id="add_interviewer">
               <span class="text-md">+</span>
@@ -114,28 +119,66 @@
 
             <div class="row items-end mt-4" id="candidate_list">
               <label for="" class="text-sm">Danh sách ứng viên <span class="text-danger">*</span></label>
-              <input type="hidden" name="candidate_indices" id="candidate_indices">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="candidate_id" class="text-xs">Ứng viên <span class="text-danger">*</span></label>
-                    <select class="form-select" name="candidate_id" id="candidate_id">
-                      <option value="" disabled selected>Chọn ứng viên</option>
-                      @foreach($candidates as $candidate)
-                      <option value="{{$candidate->id}}">{{$candidate->name}}</option>
-                      @endforeach
-                    </select>
-                    @error('candidate_id')
-                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                    @enderror
-                  </div>
-                </div>
+              <div class="table-responsive p-0 rounded-lg">
+                <table class="table align-items-center mb-0 border rounded">
+                  <thead>
+                    <tr class="border-top border-light">
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 invisible px-0">
+                        Checkbox
+                      </th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                        Ứng viên
+                      </th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                        Tin tuyển dụng
+                      </th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                        Thông tin liên lạc
+                      </th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Trạng thái
+                      </th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Thời gian ứng tuyển
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($candidates as $candidate)
+                    <tr>
+                      <td class="ps-4">
+                        <input type="checkbox" value="{{$candidate->id}}" class="w-4 h-4 text-green-500 cursor-pointer rounded focus:ring-0">
+                      </td>
+                      <td class="">
+                        <p class="text-xs font-weight-bold mb-0">{{$candidate->name}}</p>
+                      </td>
+                      <td class="">
+                        <p class="text-xs font-weight-bold mb-0">{{$candidate->application->job->name}}</p>
+                      </td>
+                      <td class="">
+                        <p class="text-xs mb-2"><i class="bi bi-envelope-at-fill"></i> {{$candidate->email}}</p>
+                        <p class="text-xs mb-0"><i class="bi bi-telephone-fill"></i> {{$candidate->phone}}</p>
+                      </td>
+                      <td class="text-center">
+                        <p class="text-xs font-weight-bold mb-0">
+                          @if ($candidate->status === "Ứng tuyển" || $candidate->status === "Trúng tuyển")
+                          <span class="bg-green-400 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
+                          @elseif ($candidate->status === "Không trúng tuyển")
+                          <span class="bg-gray-400 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
+                          @else
+                          <span class="bg-yellow-200 text-gray-600 py-0.5 px-2 rounded">{{$candidate->status}}</span>
+                          @endif
+                        </p>
+                      </td>
+                      <td class="text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{ date("d/m/Y  h:i", strtotime($candidate->created_at)) }}</span>
+                      </td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
               </div>
             </div>
-            <button class="bg-blue-500 text-white font-bold btn-sm d-flex align-items-center gap-2 px-3 py-1 mb-3 hover:opacity-90 rounded-full" type="button" id="add_candidate">
-              <span class="text-md">+</span>
-              Thêm ứng viên
-            </button>
             <div class="d-flex justify-content-end">
               <button type="submit" class="btn bg-primary text-white btn-md mt-4 mb-4">Lưu</button>
             </div>

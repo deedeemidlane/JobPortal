@@ -19,7 +19,7 @@ class Candidate extends Model
         'status'
     ];
 
-    public function applications(): HasOne
+    public function application(): HasOne
     {
         return $this->hasOne(Application::class);
     }

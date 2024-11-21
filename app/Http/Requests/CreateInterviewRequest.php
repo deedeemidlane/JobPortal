@@ -27,7 +27,6 @@ class CreateInterviewRequest extends FormRequest
             'date' => 'required',
             'interviewer_name' => 'required',
             'interviewer_email' => 'required',
-            'candidate_id' => 'required'
         ];
     }
 
@@ -38,8 +37,7 @@ class CreateInterviewRequest extends FormRequest
             'type.required' => 'Vui lòng chọn vòng phỏng vấn',
             'date.required' => 'Vui lòng chọn ngày phỏng vấn',
             'interviewer_name.required' => "Cần có ít nhất 1 người phỏng vấn: Vui lòng nhập họ tên",
-            'interviewer_email.required' => "Cần có ít nhất 1 người phỏng vấn: Vui lòng nhập email",
-            'candidate_id' => 'Cần có ít nhất 1 ứng viên'
+            'interviewer_email.required' => "Cần có ít nhất 1 người phỏng vấn: Vui lòng nhập email"
         ];
     }
 }

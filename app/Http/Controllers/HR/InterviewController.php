@@ -31,27 +31,6 @@ class InterviewController extends Controller
         ]);
     }
 
-    // public function pre_create()
-    // {
-    //     $jobs = Job::all();
-
-    //     $filtered_jobs = $jobs->filter(function ($job) {
-    //         return DateTime::createFromFormat('d/m/Y', $job->deadline) > new DateTime();
-    //     })->all();
-
-    //     return view('company.interviews.pre-create', [
-    //         "role" => User::DISPLAYED_ROLE[Auth::user()->role],
-    //         "breadcrumb_tabs" => ["Lịch phỏng vấn" => "/company/interviews", "Tạo mới" => ""],
-    //         "jobs" => $filtered_jobs
-    //     ]);
-    // }
-
-    // public function post_pre_create(Request $request)
-    // {
-    //     $request->session()->put('job_id', $request->input('job_id'));
-    //     return redirect('/company/interviews/create');
-    // }
-
     public function create()
     {
         return view('company.interviews.create', [
@@ -63,8 +42,6 @@ class InterviewController extends Controller
     public function post_create(CreateInterviewRequest $request)
     {
         $validated = $request->validated();
-
-        DB::beginTransaction();
 
         $interviewer_names = [$validated['interviewer_name']];
         $interviewer_emails = [$validated['interviewer_email']];
@@ -82,28 +59,51 @@ class InterviewController extends Controller
             }
         }
 
+        $pre_interview_info = [
+            'name' => $validated['name'],
+            'type' => $validated['type'],
+            'date' => $validated['date'],
+            'start_time' => $request->input('start_time'),
+            'end_time' => $request->input('end_time'),
+            'interviewer_names' => $interviewer_names,
+            'interviewer_emails' => $interviewer_emails,
+        ];
+
+        $request->session()->put('pre_interview_info', $pre_interview_info);
+
+        return redirect('/company/interviews/create/select-candidate');
+    }
+
+    public function select_candidate()
+    {
+        $candidates = Candidate::all();
+
+        return view('company.interviews.create-select-candidate', [
+            "role" => User::DISPLAYED_ROLE[Auth::user()->role],
+            "breadcrumb_tabs" => ["Lịch phỏng vấn" => "/company/interviews", "Tạo mới" => ""],
+            "candidates" => $candidates
+        ]);
+    }
+
+    public function post_select_candidate(Request $request)
+    {
+        $pre_interview_info = $request->session()->get('pre_interview_info');
+
+        DB::beginTransaction();
+
         try {
             $new_interview = Interview::create([
-                'name' => $validated['name'],
-                'type' => $validated['type'],
-                'date' => $validated['date'],
-                'start_time' => $request->input('start_time'),
-                'end_time' => $request->input('end_time'),
-                'interviewer_names' => serialize($interviewer_names),
-                'interviewer_emails' => serialize($interviewer_emails),
+                'name' => $pre_interview_info['name'],
+                'type' => $pre_interview_info['type'],
+                'date' => $pre_interview_info['date'],
+                'start_time' => $pre_interview_info['start_time'],
+                'end_time' => $pre_interview_info['end_time'],
+                'interviewer_names' => serialize($pre_interview_info['interviewer_names']),
+                'interviewer_emails' => serialize($pre_interview_info['interviewer_emails']),
                 'status' => "Chờ xác nhận"
             ]);
 
-            $candidate_ids = [$validated['candidate_id']];
-
-            if ($request->input('candidate_indices')) {
-                $candidate_indices = explode(",", $request->input('candidate_indices'));
-                foreach ($candidate_indices as $candidate_index) {
-                    if ($request->input('candidate_id_' . $candidate_index)) {
-                        $candidate_ids[] = $request->input('candidate_id_' . $candidate_index);
-                    }
-                }
-            }
+            $candidate_ids = explode(",", $request->input("candidates"));
 
             foreach ($candidate_ids as $candidate_id) {
                 InterviewCandidate::create([
@@ -120,15 +120,32 @@ class InterviewController extends Controller
             DB::rollBack();
         }
 
-        $request->session()->forget('job_id');
+        $request->session()->forget('pre_interview_info');
 
         return redirect('/company/interviews');
     }
 
-    public function show($id, Request $request)
+    public function show($id)
     {
         $interview = Interview::findOrFail($id);
-        $candidates = Candidate::all();
+
+        $interviewer_names = unserialize($interview->interviewer_names);
+        $interviewer_emails = unserialize($interview->interviewer_emails);
+        $interviewers = [];
+
+        for ($i = 0; $i < count($interviewer_names); $i++) {
+            $interviewers[] = [
+                'name' => $interviewer_names[$i],
+                'email' => $interviewer_emails[$i]
+            ];
+        }
+
+        $interview->interviewers = $interviewers;
+
+        $candidates = InterviewCandidate::where('interview_id', $interview->id)
+            ->with('candidate')
+            ->get()
+            ->pluck('candidate');
 
         return view('company.interviews.show', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
