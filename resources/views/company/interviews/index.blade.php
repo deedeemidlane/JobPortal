@@ -82,6 +82,11 @@
               </tbody>
             </table>
           </div>
+          @if ($interviews->count() === 0)
+          <div class="text-center py-5">
+            Chưa có lịch phỏng vấn nào trên hệ thống
+          </div>
+          @endif
         </div>
       </div>
     </div>

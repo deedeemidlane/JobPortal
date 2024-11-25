@@ -60,7 +60,10 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
 
     Route::prefix('applications')->group(function () {
         Route::get('/', [CanidateController::class, 'list_applications']);
-        Route::get('delete/{id}', [CanidateController::class, 'delete'])->where('id', '[0-9]+');
+        Route::get('/{id}', [CanidateController::class, 'show']);
+        Route::get('/{id}/recruitment-process', [CanidateController::class, 'show_recruiment_process']);
+        Route::get('/{id}/delete', [CanidateController::class, 'delete'])->where('id', '[0-9]+');
+        Route::get('{id}/recruitment-process/update-status', [CanidateController::class, 'update_status'])->where('id', '[0-9]+');
     });
 
     Route::prefix('interviews')->group(function () {

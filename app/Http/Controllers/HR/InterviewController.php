@@ -74,9 +74,13 @@ class InterviewController extends Controller
         return redirect('/company/interviews/create/select-candidate');
     }
 
-    public function select_candidate()
+    public function select_candidate(Request $request)
     {
-        $candidates = Candidate::all();
+        $interview_type = $request->session()->get('pre_interview_info')['type'];
+
+        $candidates = Candidate::where('status', $interview_type)->whereNotIn('id', function ($query) {
+            $query->select('candidate_id')->from('interview_candidate');
+        })->get();
 
         return view('company.interviews.create-select-candidate', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],

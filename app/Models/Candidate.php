@@ -23,4 +23,9 @@ class Candidate extends Model
     {
         return $this->hasOne(Application::class);
     }
+
+    public function interview_candidate(): HasOne
+    {
+        return $this->hasOne(InterviewCandidate::class);
+    }
 }

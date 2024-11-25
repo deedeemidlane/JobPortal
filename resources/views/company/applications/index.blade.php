@@ -38,7 +38,11 @@
               <tr>
                 <td class="ps-4">
                   <p class="text-xs font-weight-bold mb-2">{{$application->candidate->name}}</p>
-                  <button class="text-xs bg-green-400 text-white py-1 px-2 rounded-sm"><i class="bi bi-eye"></i> Xem CV</button>
+                  <button
+                    class="text-xs bg-green-400 text-white py-1 px-2 rounded-sm"
+                    data-bs-toggle="modal" data-bs-target="#cvModal-{{$application->id}}">
+                    <i class="bi bi-eye"></i> Xem CV
+                  </button>
                 </td>
                 <td class="">
                   <div class="text-xs font-weight-bold mb-0">{{$application->job_title}}</div>
@@ -65,7 +69,7 @@
                   <!-- <a class="text-blue-400 mb-2 p-0 text-start text-xs font-bold hover:text-blue-500" href="">
                     <i class="fas fa-pencil-alt me-2" aria-hidden="true"></i>Chỉnh sửa
                   </a>
-                  <button class="text-red-400 hover:text-red-500 mt-2 d-block p-0 text-start font-bold" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$application->id}}">
+                  <button class="text-red-400 hover:text-red-500 mt-2 d-block p-0 text-start font-bold" data-bs-toggle="modal" data-bs-target="#cvModal-{{$application->id}}">
                     <i class="far fa-trash-alt me-2"></i>Xóa
                   </button> -->
                   <a href="/company/applications/{{$application->id}}" class="me-2 text-md">
@@ -75,19 +79,22 @@
               </tr>
 
               <!-- Modal -->
-              <div class="modal fade" id="confirmModal-{{$application->id}}" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+              <div class="modal fade" id="cvModal-{{$application->id}}" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="confirmModalLabel-{{$application->id}}">Xác nhận xóa</h1>
+                      <h1 class="modal-title fs-5" id="cvModalLabel-{{$application->id}}">CV ứng tuyển</h1>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                      <h6 class="mb-0 text-danger">Bạn có chắc chắc muốn xóa ứng viên này?</h6>
+                    <div class="modal-body flex justify-center">
+                      <object
+                        data="{{$application->candidate->cv_path}}"
+                        width="800"
+                        height="800">
+                      </object>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                      <a href="/company/applications/delete/{{$application->id}}" type="button" class="btn btn-danger">Xóa</a>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                     </div>
                   </div>
                 </div>

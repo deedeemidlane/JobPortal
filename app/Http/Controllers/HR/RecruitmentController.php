@@ -181,13 +181,16 @@ class RecruitmentController extends Controller
         return redirect('/company/recruitment-news' . $request->input("query"));
     }
 
-    public function delete($id)
+    public function delete($id, Request $request)
     {
         $job = Job::findOrFail($id);
         $job->delete();
 
         session()->flash('success', 'Xóa tin tuyển dụng thành công!');
 
-        return redirect('/company/recruitment-news');
+        $campaign = $request->query('campaign-id') ? Campaign::findOrFail($request->query('campaign-id')) : null;
+        $query = $campaign ? "?campaign-id=" . $campaign->id : "";
+
+        return redirect('/company/recruitment-news' . $query);
     }
 }

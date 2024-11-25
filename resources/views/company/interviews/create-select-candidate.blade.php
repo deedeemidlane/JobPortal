@@ -70,7 +70,7 @@
           </table>
           @if($candidates->count() == 0)
           <div class="text-center py-5">
-            Chưa có ứng viên nào trên hệ thống
+            Không có ứng viên phù hợp cho vòng phỏng vấn này. Vui lòng chọn vòng phỏng vấn khác hoặc cập nhật trạng thái ứng viên.
           </div>
           @endif
         </div>

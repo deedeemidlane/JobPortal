@@ -41,14 +41,6 @@
           {{sanitize_html($job->description)}}
           <h4 class="mb-3">Yêu cầu ứng viên</h4>
           {{sanitize_html($job->requirement)}}
-          <!-- <p>Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor</p>
-          <ul class="list-unstyled">
-            <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
-            <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
-            <li><i class="fa fa-angle-right text-primary me-2"></i>Rebum vero dolores dolores elitr</li>
-            <li><i class="fa fa-angle-right text-primary me-2"></i>Est voluptua et sanctus at sanctus erat</li>
-            <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
-          </ul> -->
 
           <h4 class="mb-3">Quyền lợi</h4>
           {{sanitize_html($job->benefit)}}
@@ -58,7 +50,7 @@
             <li>{{sanitize_html($job->location)}}: {{sanitize_html($job->workplace)}}</li>
           </ul>
 
-          <h4 class="mb-3">Thời gian làm việc</h4>
+          <h4 class="mb-3" id="working_time">Thời gian làm việc</h4>
           <ul>
             <li>Thời gian làm việc: {{sanitize_html($job->working_time)}}</li>
           </ul>
@@ -67,7 +59,7 @@
 
         <div id="apply-form">
           <h4 class="mb-4">Ứng tuyển</h4>
-          <form action="/jobs/{{$job->id}}" method="POST" enctype="multipart/form-data">
+          <form action="/jobs/{{$job->id}}#working_time" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row g-3">
               <div class="col-12 col-sm-6">
@@ -93,7 +85,7 @@
               </div>
               <div class="col-12 col-sm-6">
                 <label for="cv" class="fw-bold">CV ứng tuyển <span class="text-danger">*</span></label>
-                <input type="file" accept=".pdf" class="form-control bg-white" id="cv" name="file">
+                <input type="file" accept=".pdf" class="form-control bg-white" id="cv" name="cv">
                 @error('cv')
                 <p class="text-danger text-sm fw-bold mt-2">{{ $message }}</p>
                 @enderror

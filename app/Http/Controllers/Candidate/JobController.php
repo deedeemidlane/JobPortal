@@ -139,6 +139,9 @@ class JobController extends Controller
                 session()->flash('error', 'Upload CV thất bại');
                 return back();
             }
+        } else {
+            session()->flash('error', 'Không tìm thấy CV');
+            return back();
         }
 
         DB::beginTransaction();
