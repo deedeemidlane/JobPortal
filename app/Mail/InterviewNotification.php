@@ -41,7 +41,7 @@ class InterviewNotification extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.interview-notification',
+            view: 'mail.interview-notification',
             with: [
                 'content' => $this->content
             ]

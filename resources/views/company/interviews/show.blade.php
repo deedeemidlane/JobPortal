@@ -117,7 +117,13 @@
             </button>
 
             <div class="row items-end mt-4" id="candidate_list">
-              <label for="" class="text-sm">Danh sách ứng viên <span class="text-danger">*</span></label>
+              <div class="flex justify-between">
+                <label for="" class="text-sm">Danh sách ứng viên</label>
+                <a href="#" class="bg-blue-500 text-white font-bold btn-sm d-flex align-items-center gap-2 px-3 py-1 mb-3 hover:opacity-90 rounded-full">
+                  <i class="bi bi-pencil-square"></i>
+                  Chỉnh sửa danh sách ứng viên
+                </a>
+              </div>
               <div class="table-responsive p-0 rounded-lg">
                 <table class="table align-items-center mb-0 border rounded">
                   <thead>
@@ -143,10 +149,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($candidates as $candidate)
+                    @foreach ($candidates as $index => $candidate)
                     <tr>
                       <td class="ps-4">
-                        <input type="checkbox" value="{{$candidate->id}}" class="w-4 h-4 text-green-500 cursor-pointer rounded focus:ring-0">
+                        <p class="text-xs font-weight-bold mb-0">{{$index + 1}}</p>
                       </td>
                       <td class="">
                         <p class="text-xs font-weight-bold mb-0">{{$candidate->name}}</p>
@@ -257,10 +263,10 @@
           </div>
           <div class="flex gap-2 items-center">
             <span class=" whitespace-nowrap">Tiêu đề:</span>
-            <input type="text" class="form-control" placeholder="Tiêu đề" name="subject" id="interviewerMailSubject" value="{{ $interviewer_mail->subject }}">
+            <input type="text" class="form-control" placeholder="Tiêu đề" name="subject" id="interviewerMailSubject" value="{{ $interviewer_mail?->subject }}">
           </div>
           <div class="mt-3">
-            <x-trix-input id="interviewerMailContent" placeholder="Mô tả công việc" name="content" value="{{ sanitize_html($interviewer_mail->content) }}" />
+            <x-trix-input id="interviewerMailContent" placeholder="Mô tả công việc" name="content" value="{{ sanitize_html($interviewer_mail?->content) }}" />
           </div>
         </div>
         <div class="modal-footer w-full">

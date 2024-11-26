@@ -228,15 +228,11 @@ class InterviewController extends Controller
         for ($i = 0; $i < count($interviewer_names); $i++) {
             Mail::to($interviewer_emails[$i])
                 ->send(new InterviewNotification($interviewer_mail->subject, $interviewer_mail->content));
-            // $interviewers[] = [
-            //     'name' => $interviewer_names[$i],
-            //     'email' => $interviewer_emails[$i]
-            // ];
         }
 
-        $interview->interviewer_mail_status = 'sent';
-        $interview->status = 'Đang hoạt động';
-        $interview->save();
+        // $interview->interviewer_mail_status = 'sent';
+        // $interview->status = 'Đang hoạt động';
+        // $interview->save();
 
         session()->flash('success', 'Gửi mail thành công!');
 
