@@ -137,9 +137,24 @@ class CampaignController extends Controller
         ]);
     }
 
-    public function post_update($id)
+    public function post_update(CreateCampaignRequest $request, $id)
     {
-        echo $id;
+        $validated = $request->validated();
+
+        $campaign = Campaign::findOrFail($id);
+
+        $campaign->name = !is_null($validated['name']) ? $validated['name'] : $campaign->name;
+        $campaign->description = !is_null($validated['description']) ? $validated['description'] : $campaign->description;
+        $campaign->user_in_charge_id = !is_null($validated['user_in_charge_id']) ? $validated['user_in_charge_id'] : $campaign->user_in_charge_id;
+        $campaign->start_time = !is_null($validated['start_time']) ? $validated['start_time'] : $campaign->start_time;
+        $campaign->end_time = !is_null($validated['end_time']) ? $validated['end_time'] : $campaign->end_time;
+        $campaign->requirement = !is_null($validated['requirement']) ? $validated['requirement'] : $campaign->requirement;
+
+        $campaign->save();
+
+        session()->flash('success', 'Cập nhật thông tin chiến dịch thành công!');
+
+        return redirect('/company/campaigns');
     }
 
     public function delete($id)

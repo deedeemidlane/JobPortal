@@ -6,6 +6,7 @@ use App\Http\Controllers\Candidate\JobController;
 use App\Http\Controllers\HR\CanidateController;
 use App\Http\Controllers\HR\InterviewController;
 use App\Http\Controllers\HR\RecruitmentController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\Manager\CampaignController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AuthAdmin;
@@ -75,7 +76,18 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
         Route::get('create/select-candidate', [InterviewController::class, 'select_candidate']);
         Route::post('create/select-candidate', [InterviewController::class, 'post_select_candidate']);
         Route::get('/{id}', [InterviewController::class, 'show'])->where('id', '[0-9]+');
+        Route::post('/{id}/update', [InterviewController::class, 'post_update'])->where('id', '[0-9]+');
+        Route::get('/{id}/delete', [InterviewController::class, 'delete'])->where('id', '[0-9]+');
+
+        Route::post('/{id}/mail/interviewer', [InterviewController::class, 'send_mai_to_interviewers'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail/candidate', [InterviewController::class, 'send_mail_to_candidates'])->where('id', '[0-9]+');
     });
+
+    Route::get('/mail-setting/interviewer', [MailController::class, 'update_interviewer_mail']);
+    Route::post('/mail-setting/interviewer', [MailController::class, 'post_update_interviewer_mail']);
+
+    Route::get('/mail-setting/candidate', [MailController::class, 'update_candidate_mail']);
+    Route::post('/mail-setting/candidate', [MailController::class, 'post_update_candidate_mail']);
 
     Route::get('/profile', [ProfileController::class, 'update']);
     Route::post('/profile', [ProfileController::class, 'post_update']);

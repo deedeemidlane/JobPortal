@@ -18,7 +18,9 @@ class Interview extends Model
         'end_time',
         'interviewer_names',
         'interviewer_emails',
-        'status'
+        'status',
+        'interviewer_mail_status',
+        'candidate_mail_status'
     ];
 
     public function interview_candidate(): HasMany

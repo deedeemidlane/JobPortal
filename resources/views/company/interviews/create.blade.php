@@ -48,7 +48,7 @@
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                       <i class="bi bi-calendar-event-fill"></i>
                     </div>
-                    <input id="datepicker-range-start" datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="date" id="date" value="{{ old('date') }}">
+                    <input id="datepicker-range-start" autocomplete="off" datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="date" id="date" value="{{ old('date') }}">
                   </div>
                 </div>
                 @error('date')
