@@ -81,8 +81,8 @@ class InterviewController extends Controller
     {
         $interview_type = $request->session()->get('pre_interview_info')['type'];
 
-        $candidates = Candidate::where('status', $interview_type)->whereNotIn('id', function ($query) {
-            $query->select('candidate_id')->from('interview_candidate');
+        $candidates = Candidate::where('status', $interview_type)->whereNotIn('id', function ($query) use ($interview_type) {
+            $query->select('candidate_id')->from('interview_candidate')->where('type', '=', $interview_type);
         })->get();
 
         return view('company.interviews.create-select-candidate', [
@@ -138,9 +138,15 @@ class InterviewController extends Controller
 
         $interviewer_names = unserialize($interview->interviewer_names);
         $interviewer_emails = unserialize($interview->interviewer_emails);
+
+        $first_interviewer = [
+            'name' => $interviewer_names[0],
+            'email' => $interviewer_emails[0]
+        ];
+
         $interviewers = [];
 
-        for ($i = 0; $i < count($interviewer_names); $i++) {
+        for ($i = 1; $i < count($interviewer_names); $i++) {
             $interviewers[] = [
                 'name' => $interviewer_names[$i],
                 'email' => $interviewer_emails[$i]
@@ -162,6 +168,7 @@ class InterviewController extends Controller
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
             "breadcrumb_tabs" => ["Lịch phỏng vấn" => "/company/interviews", "Thông tin chi tiết" => ""],
             "interview" => $interview,
+            "first_interviewer" => $first_interviewer,
             "candidates" => $candidates,
             "interviewer_mail" => $interviewer_mail,
             "candidate_mail" => $candidate_mail
@@ -216,9 +223,70 @@ class InterviewController extends Controller
         return redirect('/company/interviews');
     }
 
+    public function update_candidate($id)
+    {
+        $interview = Interview::findOrFail($id);
+
+        $interview_type = $interview->type;
+
+        $candidates_not_selected = Candidate::where('status', $interview_type)->whereNotIn('id', function ($query) use ($interview_type) {
+            $query->select('candidate_id')->from('interview_candidate')->where('type', '=', $interview_type);
+        })->get();
+
+        $candidates_selected = InterviewCandidate::where('interview_id', $interview->id)
+            ->with('candidate')
+            ->get()
+            ->pluck('candidate');
+
+        return view('company.interviews.update-candidates', [
+            "role" => User::DISPLAYED_ROLE[Auth::user()->role],
+            "breadcrumb_tabs" => [
+                "Lịch phỏng vấn" => "/company/interviews",
+                "Thông tin chi tiết" => "/company/interviews/" . $id,
+                "Cập nhật thông tin ứng viên" => ""
+            ],
+            "candidates_selected" => $candidates_selected,
+            "candidates_not_selected" => $candidates_not_selected,
+            "interview_id" => $interview->id
+        ]);
+    }
+
+    public function post_update_candidate(Request $request, $id)
+    {
+        echo $request->input('candidates');
+
+        $interview = Interview::findOrFail($id);
+
+        DB::beginTransaction();
+
+        try {
+            $candidate_ids = explode(",", $request->input("candidates"));
+
+            InterviewCandidate::where('interview_id', $interview->id)->delete();
+
+            foreach ($candidate_ids as $candidate_id) {
+                InterviewCandidate::create([
+                    'interview_id' => $interview->id,
+                    'candidate_id' => $candidate_id,
+                    'type' => $interview->type
+                ]);
+            }
+
+            session()->flash('success', 'Cập nhật danh sách ứng viên thành công!');
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            throw $th;
+            DB::rollBack();
+        }
+
+        return redirect('/company/interviews/' . $interview->id);
+    }
+
     public function send_mai_to_interviewers(Request $request)
     {
         $interview = Interview::findOrFail($request->interview_id);
+        // echo $interview->start_time . ' - ' . $interview->end_time . " ngày " . $interview->date;
 
         $interviewer_names = unserialize($interview->interviewer_names);
         $interviewer_emails = unserialize($interview->interviewer_emails);
@@ -226,26 +294,65 @@ class InterviewController extends Controller
         $interviewer_mail = MailModel::where('name', 'interviewer-notification')->first();
 
         for ($i = 0; $i < count($interviewer_names); $i++) {
+            $content = str_replace('<strong>[Tên người phỏng vấn]</strong>', $interviewer_names[$i], $interviewer_mail->content);
+            $content = str_replace('<strong>[Tên vòng phỏng vấn]</strong>', $interview->type, $content);
+            $content = str_replace(
+                '<strong>[Thời gian phỏng vấn]</strong>',
+                $interview->start_time . ' - ' . $interview->end_time . " ngày " . $interview->date,
+                $content
+            );
+            $content = str_replace(
+                '<strong>[Số lượng ứng viên]</strong>',
+                $interview->interview_candidate->count(),
+                $content
+            );
+            // echo $content;
             Mail::to($interviewer_emails[$i])
-                ->send(new InterviewNotification($interviewer_mail->subject, $interviewer_mail->content));
+                ->send(new InterviewNotification($interviewer_mail->subject, $content));
         }
 
-        // $interview->interviewer_mail_status = 'sent';
-        // $interview->status = 'Đang hoạt động';
-        // $interview->save();
+        $interview->interviewer_mail_status = 'sent';
+        $interview->status = 'Đang hoạt động';
+        $interview->save();
 
         session()->flash('success', 'Gửi mail thành công!');
 
         return back();
     }
 
-    public function send_mai_to_candidates(Request $request)
+    public function send_mail_to_candidates(Request $request)
     {
         $interview = Interview::findOrFail($request->interview_id);
 
+        $candidates = InterviewCandidate::where('interview_id', $interview->id)
+            ->with('candidate')
+            ->get()
+            ->pluck('candidate');
 
+        $candidate_mail = MailModel::where('name', 'candidate-notification')->first();
 
-        $interview->interviewer_mail_status = 'sent';
+        foreach ($candidates as $candidate) {
+            $content = str_replace(
+                '<strong>[Tên ứng viên]</strong>',
+                '<strong>' . $candidate->name . '</strong>',
+                $candidate_mail->content
+            );
+            $content = str_replace(
+                '<strong>[Vị trí ứng tuyển]</strong>',
+                '<strong>' . $candidate->application->job->name . '</strong>',
+                $content
+            );
+            $content = str_replace(
+                '<strong>[Thời gian phỏng vấn]</strong>',
+                '<strong>' . $interview->start_time . ' - ' . $interview->end_time . " ngày " . $interview->date . '</strong>',
+                $content
+            );
+            // echo $content;
+            Mail::to($candidate->email)
+                ->send(new InterviewNotification($candidate_mail->subject, $content));
+        }
+
+        $interview->candidate_mail_status = 'sent';
         $interview->status = 'Đang hoạt động';
         $interview->save();
 

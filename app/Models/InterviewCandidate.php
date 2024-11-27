@@ -14,7 +14,8 @@ class InterviewCandidate extends Model
 
     protected $fillable = [
         'interview_id',
-        'candidate_id'
+        'candidate_id',
+        'type'
     ];
 
     public function candidate(): BelongsTo

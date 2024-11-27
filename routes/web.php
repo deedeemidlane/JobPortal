@@ -62,9 +62,10 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
     Route::prefix('applications')->group(function () {
         Route::get('/', [CanidateController::class, 'list_applications']);
         Route::get('/{id}', [CanidateController::class, 'show']);
-        Route::get('/{id}/recruitment-process', [CanidateController::class, 'show_recruiment_process']);
         Route::get('/{id}/delete', [CanidateController::class, 'delete'])->where('id', '[0-9]+');
-        Route::get('{id}/recruitment-process/update-status', [CanidateController::class, 'update_status'])->where('id', '[0-9]+');
+        Route::get('/{id}/recruitment-process', [CanidateController::class, 'show_recruiment_process'])->where('id', '[0-9]+');
+        Route::post('/{id}/recruitment-process/comment', [CanidateController::class, 'post_comment'])->where('id', '[0-9]+');
+        Route::get('/{id}/recruitment-process/update-status', [CanidateController::class, 'update_status'])->where('id', '[0-9]+');
     });
 
     Route::prefix('interviews')->group(function () {
@@ -78,6 +79,8 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
         Route::get('/{id}', [InterviewController::class, 'show'])->where('id', '[0-9]+');
         Route::post('/{id}/update', [InterviewController::class, 'post_update'])->where('id', '[0-9]+');
         Route::get('/{id}/delete', [InterviewController::class, 'delete'])->where('id', '[0-9]+');
+        Route::get('/{id}/update-candidates', [InterviewController::class, 'update_candidate'])->where('id', '[0-9]+');
+        Route::post('/{id}/update-candidates', [InterviewController::class, 'post_update_candidate'])->where('id', '[0-9]+');
 
         Route::post('/{id}/mail/interviewer', [InterviewController::class, 'send_mai_to_interviewers'])->where('id', '[0-9]+');
         Route::post('/{id}/mail/candidate', [InterviewController::class, 'send_mail_to_candidates'])->where('id', '[0-9]+');

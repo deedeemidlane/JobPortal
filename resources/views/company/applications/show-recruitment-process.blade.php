@@ -74,7 +74,8 @@
           <div class="col-xl-9 col-md-8 px-4 py-2 border-2 rounded-md">
             @switch($status)
             @case("Ứng tuyển")
-            <form action="/company/applications/{{$application->id}}/recruitment-process/update" method="POST">
+            <form action="/company/applications/{{$application->id}}/recruitment-process/comment" method="POST">
+              @csrf
               <div class="py-3">
                 <label for="name" class="text-sm mr-3">CV ứng tuyển:</label>
                 <button
@@ -86,7 +87,7 @@
               </div>
               <div class="form-group">
                 <label for="" class="text-sm">Đánh giá</label>
-                <textarea name="comment" class="form-control" placeholder="Vui lòng đánh giá tại đây" rows="5"></textarea>
+                <textarea name="comment" class="form-control" placeholder="Vui lòng đánh giá tại đây" rows="5">{{$comment}}</textarea>
               </div>
               <div>
                 <button type="submit" class="btn btn-info">Cập nhật</button>
@@ -97,7 +98,8 @@
             </form>
             @break
             @case("Phỏng vấn chuyên sâu")
-            <form action="/company/applications/{{$application->id}}/recruitment-process/update" method="POST">
+            <form action="/company/applications/{{$application->id}}/recruitment-process/comment" method="POST">
+              @csrf
               <div class="row my-2 items-center">
                 <div class="text-sm text-black font-bold col-xl-3">Lịch phỏng vấn:</div>
                 <div class="col-xl-9">
@@ -186,7 +188,7 @@
               @endif
               <div class="form-group">
                 <label for="" class="text-sm mx-0 text-black">Đánh giá</label>
-                <textarea name="comment" class="form-control" placeholder="Vui lòng đánh giá tại đây" rows="5"></textarea>
+                <textarea name="comment" class="form-control" placeholder="Vui lòng đánh giá tại đây" rows="5">{{$comment}}</textarea>
               </div>
               <div>
                 <button type="submit" class="btn btn-info">Cập nhật</button>
@@ -197,7 +199,8 @@
             </form>
             @break
             @case("Phỏng vấn doanh nghiệp")
-            <form action="/company/applications/{{$application->id}}/recruitment-process/update" method="POST">
+            <form action="/company/applications/{{$application->id}}/recruitment-process/comment" method="POST">
+              @csrf
               <div class="row my-2 items-center">
                 <div class="text-sm text-black font-bold col-xl-3">Lịch phỏng vấn:</div>
                 <div class="col-xl-9">
@@ -286,7 +289,7 @@
               @endif
               <div class="form-group">
                 <label for="" class="text-sm mx-0 text-black">Đánh giá</label>
-                <textarea name="comment" class="form-control" placeholder="Vui lòng đánh giá tại đây" rows="5"></textarea>
+                <textarea name="comment" class="form-control" placeholder="Vui lòng đánh giá tại đây" rows="5">{{$comment}}</textarea>
               </div>
               <div>
                 <button type="submit" class="btn btn-info">Cập nhật</button>

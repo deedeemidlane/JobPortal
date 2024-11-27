@@ -40,6 +40,7 @@ class CanidateController extends Controller
     {
         $application = Application::findOrFail($id);
         $candidate_status = $application->candidate->status;
+        $candidate_comment = $application->candidate->comment;
 
         $interview = $application->candidate->interview_candidate?->interview;
         $interviewers = [];
@@ -63,9 +64,23 @@ class CanidateController extends Controller
             "breadcrumb_tabs" => ["Quản lý ứng viên" => "/company/applications", "Chi tiết ứng viên" => ""],
             'application' => $application,
             'status' => $candidate_status,
+            'comment' => $candidate_comment,
             'interview' => $interview,
             'interviewers' => $interviewers
         ]);
+    }
+
+    public function post_comment(Request $request, $id)
+    {
+        // echo $request->input('comment');
+        $application = Application::findOrFail($id);
+        $candidate = $application->candidate;
+        $candidate->comment = $request->input('comment');
+        $candidate->save();
+
+        session()->flash('success', 'Cập nhật thông tin thành công');
+
+        return back();
     }
 
     public function update_status($id)

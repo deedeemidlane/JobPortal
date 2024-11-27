@@ -27,15 +27,12 @@
                 </div>
                 <div class="form-group">
                   <label for="type" class="text-sm">Vòng phỏng vấn <span class="text-danger">*</span></label>
-                  <select class="form-select" name="type" id="type">
-                    <option value="" disabled selected>Chọn vòng phỏng vấn</option>
+                  <select class="form-select" name="type" id="type" disabled>
                     <option value="Phỏng vấn chuyên sâu" @if ($interview->type === "Phỏng vấn chuyên sâu") selected @endif>
-                      Phỏng vấn chuyên sâu (online)
-                    </option>
-                    <option value="Phỏng vấn doanh nghiệp" @if ($interview->type === "Phỏng vấn doanh nghiệp") selected @endif>
-                      Phỏng vấn doanh nghiệp (offline)
+                      {{$interview->type}}
                     </option>
                   </select>
+                  <input type="hidden" name="type" value="{{$interview->type}}">
                   @error('type')
                   <p class="text-danger text-xs mt-2">{{ $message }}</p>
                   @enderror
@@ -88,12 +85,11 @@
             <div class="row items-end" id="interviewer_list">
               <label for="" class="text-sm">Danh sách người phỏng vấn <span class="text-danger">*</span></label>
               <input type="hidden" name="interviewer_indices" id="interviewer_indices">
-              @foreach($interview->interviewers as $interviewer)
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="interviewer_name">Họ và tên <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" placeholder="Họ và tên" name="interviewer_name" id="interviewer_name" value="{{ $interviewer['name'] }}">
+                    <input type="text" class="form-control" placeholder="Họ và tên" name="interviewer_name" id="interviewer_name" value="{{ $first_interviewer['name'] }}">
                     @error('interviewer_name')
                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                     @enderror
@@ -102,27 +98,55 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="interviewer_email">Email <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" placeholder="Email" name="interviewer_email" id="interviewer_email" value="{{ $interviewer['email'] }}">
+                    <input type="text" class="form-control" placeholder="Email" name="interviewer_email" id="interviewer_email" value="{{ $first_interviewer['email'] }}">
                     @error('interviewer_email')
                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                     @enderror
                   </div>
                 </div>
               </div>
+              <input type="hidden" id="interviewer_indices_size" value="{{count($interview->interviewers)}}" />
+              @foreach($interview->interviewers as $index=>$interviewer)
+              <div class="row items-end">
+                <input type="hidden" name="index" value="{{$index + 1}}">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="interviewer_name_{{$index + 1}}">Họ và tên</label>
+                    <input type="text" class="form-control" placeholder="Họ và tên" name="interviewer_name_{{$index + 1}}" id="interviewer_name_{{$index + 1}}" required value="{{$interviewer['name']}}">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="interviewer_email_{{$index + 1}}">Email</label>
+                    <input type="text" class="form-control" placeholder="Email" name="interviewer_email_{{$index + 1}}" id="interviewer_email_{{$index + 1}}" required value="{{$interviewer['email']}}">
+                  </div>
+                </div>
+                @if($interview->status === "Chờ xác nhận")
+                <div class="col-md-4">
+                  <button type="button" class="mb-3 py-2 px-3 hover:bg-gray-200 rounded delete-btn">
+                    <i class="bi bi-x-lg text-black"></i>
+                  </button>
+                </div>
+                @endif
+              </div>
               @endforeach
             </div>
-            <button class="bg-blue-500 text-white font-bold btn-sm d-flex align-items-center gap-2 px-3 py-1 mb-3 hover:opacity-90 rounded-full" type="button" id="add_interviewer">
+            @if($interview->status === "Chờ xác nhận")
+            <button class="bg-blue-500 text-white font-bold btn-sm d-flex align-items-center gap-2 px-3 py-1 mb-3 hover:opacity-90 disabled:opacity-50 rounded-full" type="button" id="add_interviewer">
               <span class="text-md">+</span>
               Thêm người phỏng vấn
             </button>
+            @endif
 
             <div class="row items-end mt-4" id="candidate_list">
               <div class="flex justify-between">
                 <label for="" class="text-sm">Danh sách ứng viên</label>
-                <a href="#" class="bg-blue-500 text-white font-bold btn-sm d-flex align-items-center gap-2 px-3 py-1 mb-3 hover:opacity-90 rounded-full">
+                @if($interview->status === "Chờ xác nhận")
+                <a href="/company/interviews/{{$interview->id}}/update-candidates" class="bg-blue-500 text-white font-bold btn-sm d-flex align-items-center gap-2 px-3 py-1 mb-3 hover:opacity-90 rounded-full">
                   <i class="bi bi-pencil-square"></i>
                   Chỉnh sửa danh sách ứng viên
                 </a>
+                @endif
               </div>
               <div class="table-responsive p-0 rounded-lg">
                 <table class="table align-items-center mb-0 border rounded">
@@ -209,10 +233,10 @@
                 @endif
               </div>
               <div class="d-flex gap-4">
-                <button type="button" class="btn btn-danger btn-md my-4" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$interview->id}}">
+                <button type="button" class="btn btn-danger btn-md my-4" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$interview->id}}" @if($interview->status === "Đang hoạt động") disabled @endif>
                   Xóa
                 </button>
-                <button type="submit" class="btn bg-info text-white btn-md my-4">Cập nhật</button>
+                <button type="submit" class="btn bg-info text-white btn-md my-4" @if($interview->status !== "Chờ xác nhận") disabled @endif>Cập nhật</button>
               </div>
             </div>
           </form>
@@ -330,8 +354,14 @@
 </form>
 
 <script>
-  let interviewer_index = 1;
-  const interviewer_indices = [];
+  const interviewer_indices_size = document.getElementById("interviewer_indices_size").value;
+
+  let interviewer_index = parseInt(interviewer_indices_size) + 1;
+  const interviewer_indices = Array.from({
+    length: interviewer_indices_size
+  }, (_, i) => i + 1);
+
+  document.getElementById("interviewer_indices").value = interviewer_indices.toString();
 
   const interviewerList = document.getElementById("interviewer_list");
 
@@ -382,55 +412,15 @@
     document.getElementById("interviewer_indices").value = interviewer_indices.toString();
   });
 
-  let candidate_index = 1;
-  const candidate_indices = [];
+  document.querySelectorAll(".delete-btn").forEach(e => {
+    e.addEventListener("click", () => {
+      const index = parseInt(e.parentElement.parentElement.querySelector("input[name='index']").value)
+      interviewer_indices.splice(interviewer_indices.indexOf(index), 1);
 
-  const candidateList = document.getElementById("candidate_list");
+      interviewerList.removeChild(e.parentElement.parentElement);
 
-  document.getElementById("add_candidate").addEventListener("click", function() {
-    const index = candidate_index;
-    candidate_index++;
-    candidate_indices.push(index);
-
-    const listItem = document.createElement("div");
-    listItem.className = "row items-end";
-    listItem.innerHTML = `
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="candidate_id_${index}" class="text-xs">Ứng viên</label>
-        <select class="form-select" name="candidate_id_${index}" id="candidate_id_${index}">
-          <option value="" disabled selected>Chọn ứng viên</option>
-          @foreach($candidates as $candidate)
-          <option value="{{$candidate->id}}">{{$candidate->name}}</option>
-          @endforeach
-        </select>
-      </div>
-    </div>
-    `
-
-    const delBtn = document.createElement('button');
-    delBtn.type = "button";
-    delBtn.className = "mb-3 py-2 px-3 hover:bg-gray-200 rounded";
-    delBtn.innerHTML = `<i class="bi bi-x-lg text-black"></i>`;
-
-    delBtn.addEventListener("click", () => {
-      candidate_indices.splice(candidate_indices.indexOf(index), 1);
-
-      candidateList.removeChild(listItem);
-
-      document.getElementById("candidate_indices").value = candidate_indices.toString();
-    });
-
-    const delBtnContainer = document.createElement('div');
-    delBtnContainer.className = "col-md-4";
-
-    delBtnContainer.appendChild(delBtn);
-
-    listItem.appendChild(delBtnContainer);
-
-    candidateList.appendChild(listItem);
-
-    document.getElementById("candidate_indices").value = candidate_indices.toString();
+      document.getElementById("interviewer_indices").value = interviewer_indices.toString();
+    })
   });
 </script>
 
