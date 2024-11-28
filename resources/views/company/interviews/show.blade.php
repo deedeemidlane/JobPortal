@@ -292,10 +292,13 @@
           <div class="mt-3">
             <x-trix-input id="interviewerMailContent" placeholder="Mô tả công việc" name="content" value="{{ sanitize_html($interviewer_mail?->content) }}" />
           </div>
+          <div>
+            <p class="text-sm pl-2 font-semibold italic my-1 text-yellow-400">Lưu ý: Giữ nguyên định dạng các nhãn [...] khi chỉnh sửa email</p>
+          </div>
         </div>
         <div class="modal-footer w-full">
           <div class="flex justify-between w-full">
-            <a href="/company/mail-setting/interviewer" type="button" class="btn">
+            <a href="/company/interviews/{{$interview->id}}/mail-setting/interviewer" type="button" class="btn">
               <i class="bi bi-gear mr-1"></i>Thiết lập email
             </a>
             <div class="flex gap-2">
@@ -336,10 +339,13 @@
           <div class="mt-3">
             <x-trix-input id="candidateMailContent" placeholder="Mô tả công việc" name="content" value="{{ sanitize_html($candidate_mail?->content) }}" />
           </div>
+          <div>
+            <p class="text-sm pl-2 font-semibold italic my-1 text-yellow-400">Lưu ý: Giữ nguyên định dạng các nhãn [...] khi chỉnh sửa email</p>
+          </div>
         </div>
         <div class="modal-footer w-full">
           <div class="flex justify-between w-full">
-            <a href="/company/mail-setting/candidate" type="button" class="btn">
+            <a href="/company/interviews/{{$interview->id}}/mail-setting/candidate" type="button" class="btn">
               <i class="bi bi-gear mr-1"></i>Thiết lập email
             </a>
             <div class="flex gap-2">

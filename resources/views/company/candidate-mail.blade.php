@@ -34,6 +34,9 @@
             @enderror
           </div>
         </div>
+        <div>
+          <p class="text-sm pl-2 font-semibold italic my-1 text-yellow-400">Lưu ý: Giữ nguyên định dạng các nhãn [...] khi chỉnh sửa email</p>
+        </div>
         <div class="d-flex justify-content-end mt-5">
           <button type="submit" class="btn bg-primary text-white btn-md">Lưu</button>
         </div>

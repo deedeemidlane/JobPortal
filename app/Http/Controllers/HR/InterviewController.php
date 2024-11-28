@@ -17,21 +17,69 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class InterviewController extends Controller
 {
-    public function list_interviews()
+    public function list_interviews(Request $request)
     {
-        $interviews = Interview::all();
-        foreach ($interviews as $interview) {
-            $interview->candidate_count = $interview->interview_candidate()->count();
+        $interviews = Interview::query();
+
+        $interviews_before_filtered = $interviews->get();
+
+        $query_name = $request->query('name');
+        $query_status = $request->query('status');
+        $query_type = $request->query('type');
+        $query_start_time = $request->query('start_time');
+        $query_end_time = $request->query('end_time');
+
+        if ($query_name) {
+            $interviews = $interviews->where('name', 'like', '%' . $query_name . '%');
+        }
+        if ($query_status) {
+            $interviews = $interviews->where('status', $query_status);
+        }
+        if ($query_type) {
+            $interviews = $interviews->where('type', $query_type);
+        }
+        if ($query_start_time) {
+            $minDateCarbon = Carbon::createFromFormat('d/m/Y', $query_start_time)->format('Y-m-d');
+            $interviews = $interviews->whereRaw("STR_TO_DATE(date, '%d/%m/%Y') >= ?", [$minDateCarbon]);
+        }
+        if ($query_end_time) {
+            $maxDateCarbon = Carbon::createFromFormat('d/m/Y', $query_end_time)->format('Y-m-d');
+            $interviews = $interviews->whereRaw("STR_TO_DATE(date, '%d/%m/%Y') <= ?", [$maxDateCarbon]);
+        }
+
+        if (!is_a($interviews, 'Illuminate\Database\Eloquent\Collection')) {
+            $interviews = $interviews->get();
         }
 
         return view('company.interviews.index', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
             "breadcrumb_tabs" => ["Lịch phỏng vấn" => ""],
-            "interviews" => $interviews
+            "interviews" => $interviews,
+            "interviews_before_filtered" => $interviews_before_filtered,
+            'query_name' => $query_name,
+            'query_status' => $query_status,
+            'query_type' => $query_type,
+            'query_start_time' => $query_start_time,
+            'query_end_time' => $query_end_time
+
         ]);
+    }
+
+    public function search_interviews(Request $request)
+    {
+        $urlWithQuery = $request->fullUrlWithQuery([
+            'name' => $request->input('name'),
+            'type' => $request->input('type'),
+            'status' => $request->input('status'),
+            'start_time' => $request->input('start_date'),
+            'end_time' => $request->input('end_date')
+        ]);
+
+        return redirect($urlWithQuery);
     }
 
     public function create()

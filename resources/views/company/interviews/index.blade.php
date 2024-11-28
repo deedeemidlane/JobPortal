@@ -9,10 +9,19 @@
         <div class="card-header pb-0">
           <div class="d-flex flex-row justify-content-between">
             <h5 class="mb-0">Danh sách lịch phỏng vấn</h5>
-            <a href="/company/interviews/create" class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button">
-              <span class="text-md">+</span>
-              Tạo mới
-            </a>
+            <div class="flex gap-3">
+              <button
+                type="button"
+                class="bg-blue-500 text-white font-bold d-flex align-items-center gap-1 px-3 hover:opacity-90 rounded-lg text-sm"
+                data-bs-toggle="modal" data-bs-target="#searchModal">
+                <i class="bi bi-filter text-lg mt-1"></i>
+                Lọc
+              </button>
+              <a href="/company/interviews/create" class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button">
+                <span class="text-md">+</span>
+                Tạo mới
+              </a>
+            </div>
           </div>
         </div>
         <div class="card-body px-0 pt-3 pb-2">
@@ -30,7 +39,7 @@
                     Ngày phỏng vấn
                   </th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                    Ứng viên
+                    Vòng phỏng vấn
                   </th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Trạng thái
@@ -56,7 +65,7 @@
                     <p class="text-xs font-weight-bold mb-0">{{ $interview->date }}</p>
                   </td>
                   <td class="text-center">
-                    <p class="text-xs font-weight-bold mb-0">{{ $interview->candidate_count }}</p>
+                    <p class="text-xs font-weight-bold mb-0">{{ $interview->type }}</p>
                   </td>
                   <td class="text-center">
                     <p class="text-xs font-weight-bold mb-0">
@@ -82,9 +91,14 @@
               </tbody>
             </table>
           </div>
-          @if ($interviews->count() === 0)
+          @if ($interviews_before_filtered->count() === 0)
           <div class="text-center py-5">
             Chưa có lịch phỏng vấn nào trên hệ thống
+          </div>
+          @endif
+          @if($interviews->count() == 0)
+          <div class="text-center py-5">
+            Không tìm thấy lịch phỏng vấn phù hợp
           </div>
           @endif
         </div>
@@ -92,5 +106,78 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<form action="/company/interviews" method="POST">
+  @csrf
+  <div class="modal fade" id="searchModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="searchModalLabel">Tìm kiếm lịch phỏng vấn</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name" class="text-sm">Tên</label>
+            <input type="search" class="form-control" placeholder="Tên lịch phỏng vấn" name="name" id="name" value="{{$query_name}}">
+          </div>
+          <div class="form-group">
+            <label for="type" class="text-sm">Vòng phỏng vấn</label>
+            <select class="form-select" name="type" id="type">
+              <option value="">Tất cả</option>
+              <option value="Phỏng vấn chuyên sâu" @if($query_type==="Phỏng vấn chuyên sâu" ) selected @endif>Phỏng vấn chuyên sâu</option>
+              <option value="Phỏng vấn doanh nghiệp" @if($query_type==="Phỏng vấn doanh nghiệp" ) selected @endif>Phỏng vấn doanh nghiệp</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="status" class="text-sm">Trạng thái</label>
+            <select class="form-select" name="status" id="status">
+              <option value="">Tất cả</option>
+              <option value="Chờ xác nhận" @if($query_status==="Chờ xác nhận" ) selected @endif>Chờ xác nhận</option>
+              <option value="Đang hoạt động" @if($query_status==="Đang hoạt động" ) selected @endif>Đang hoạt động</option>
+              <option value="Đã kết thúc" @if($query_status==="Đã kết thúc" ) selected @endif>Đã kết thúc</option>
+            </select>
+          </div>
+          <div>
+            <label for="" class="text-sm">Thời gian</label>
+            <div class="flex items-center gap-2 mb-2">
+              <label for="start_date" class="mb-0 w-16">Từ ngày</label>
+              <div class="relative flex-1">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <i class="bi bi-calendar-event-fill"></i>
+                </div>
+                <input id="datepicker-start" datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" autocomplete="off" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="start_date" value="{{$query_start_time}}">
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <label for="start_date" class="mb-0 w-16">Đến ngày</label>
+              <div class="relative flex-1">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <i class="bi bi-calendar-event-fill"></i>
+                </div>
+                <input id="datepicker-end" datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" autocomplete="off" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="end_date" value="{{$query_end_time}}">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info" data-bs-dismiss="modal">
+            Tìm kiếm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+  setTimeout(() => {
+    const datepickerEls = document.querySelectorAll('.datepicker');
+    datepickerEls.forEach(datepickerEl => {
+      datepickerEl.classList.add("z-[9999]");
+    })
+  }, 1000);
+</script>
 
 @endsection

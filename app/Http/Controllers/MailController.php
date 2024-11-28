@@ -11,18 +11,22 @@ use Illuminate\Support\Facades\DB;
 
 class MailController extends Controller
 {
-    public function update_interviewer_mail()
+    public function update_interviewer_mail($id)
     {
         $mail = Mail::where('name', 'interviewer-notification')->first();
 
         return view('company.interviewer-mail', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
-            "breadcrumb_tabs" => ["Thiết lập email" => ""],
+            "breadcrumb_tabs" => [
+                "Lịch phỏng vấn" => "/company/interviews",
+                "Thông tin chi tiết" => "/company/interviews/" . $id,
+                "Thiết lập email" => ""
+            ],
             "mail" => $mail
         ]);
     }
 
-    public function post_update_interviewer_mail(SetUpMailTemplateRequest $request)
+    public function post_update_interviewer_mail(SetUpMailTemplateRequest $request, $id)
     {
         $validated = $request->validated();
 
@@ -51,21 +55,25 @@ class MailController extends Controller
             DB::rollBack();
         }
 
-        return redirect()->back();
+        return redirect('/company/interviews/' . $id);
     }
 
-    public function update_candidate_mail()
+    public function update_candidate_mail($id)
     {
         $mail = Mail::where('name', 'candidate-notification')->first();
 
         return view('company.candidate-mail', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
-            "breadcrumb_tabs" => ["Thiết lập email" => ""],
+            "breadcrumb_tabs" => [
+                "Lịch phỏng vấn" => "/company/interviews",
+                "Thông tin chi tiết" => "/company/interviews/" . $id,
+                "Thiết lập email" => ""
+            ],
             "mail" => $mail
         ]);
     }
 
-    public function post_update_candidate_mail(SetUpMailTemplateRequest $request)
+    public function post_update_candidate_mail(SetUpMailTemplateRequest $request, $id)
     {
         $validated = $request->validated();
 
@@ -94,6 +102,6 @@ class MailController extends Controller
             DB::rollBack();
         }
 
-        return redirect()->back();
+        return redirect('/company/interviews/' . $id);
     }
 }

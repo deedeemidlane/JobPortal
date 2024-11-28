@@ -4,25 +4,56 @@ namespace App\Http\Controllers\HR;
 
 use App\Http\Controllers\Controller;
 use App\Models\Application;
+use App\Models\Candidate;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CanidateController extends Controller
 {
-    public function list_applications()
+    public function list_applications(Request $request)
     {
-        $applications = Application::all();
-        foreach ($applications as $application) {
-            $application->job_title = $application->job?->name;
-            $application->job_id = $application->job?->id;
+        $candidates = Candidate::query();
+
+        $candidates_before_filtered = $candidates->get();
+
+        $query_name = $request->query('name');
+        $query_status = $request->query('status');
+
+        if ($query_name) {
+            $candidates = $candidates->where('name', 'like', '%' . $query_name . '%');
+        }
+        if ($query_status) {
+            $candidates = $candidates->where('status', $query_status);
+        }
+
+        if (!is_a($candidates, 'Illuminate\Database\Eloquent\Collection')) {
+            $candidates = $candidates->get();
+        }
+
+        foreach ($candidates as $candidate) {
+            $candidate->job_title = $candidate->application->job?->name;
+            $candidate->job_id = $candidate->application->job?->id;
         }
 
         return view('company.applications.index', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
             "breadcrumb_tabs" => ["Quản lý ứng viên" => ""],
-            'applications' => $applications
+            'candidates' => $candidates,
+            'candidates_before_filtered' => $candidates_before_filtered,
+            'query_name' => $query_name,
+            'query_status' => $query_status
         ]);
+    }
+
+    public function search_applications(Request $request)
+    {
+        $urlWithQuery = $request->fullUrlWithQuery([
+            'name' => $request->input('name'),
+            'status' => $request->input('status')
+        ]);
+
+        return redirect($urlWithQuery);
     }
 
     public function show($id)

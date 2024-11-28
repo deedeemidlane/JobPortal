@@ -61,6 +61,7 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
 
     Route::prefix('applications')->group(function () {
         Route::get('/', [CanidateController::class, 'list_applications']);
+        Route::post('/', [CanidateController::class, 'search_applications']);
         Route::get('/{id}', [CanidateController::class, 'show']);
         Route::get('/{id}/delete', [CanidateController::class, 'delete'])->where('id', '[0-9]+');
         Route::get('/{id}/recruitment-process', [CanidateController::class, 'show_recruiment_process'])->where('id', '[0-9]+');
@@ -70,6 +71,7 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
 
     Route::prefix('interviews')->group(function () {
         Route::get('/', [InterviewController::class, 'list_interviews']);
+        Route::post('/', [InterviewController::class, 'search_interviews']);
         // Route::get('pre-create', [InterviewController::class, 'pre_create']);
         // Route::post('pre-create', [InterviewController::class, 'post_pre_create']);
         Route::get('create', [InterviewController::class, 'create']);
@@ -82,15 +84,15 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
         Route::get('/{id}/update-candidates', [InterviewController::class, 'update_candidate'])->where('id', '[0-9]+');
         Route::post('/{id}/update-candidates', [InterviewController::class, 'post_update_candidate'])->where('id', '[0-9]+');
 
+        Route::get('/{id}/mail-setting/interviewer', [MailController::class, 'update_interviewer_mail'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail-setting/interviewer', [MailController::class, 'post_update_interviewer_mail'])->where('id', '[0-9]+');
+
+        Route::get('/{id}/mail-setting/candidate', [MailController::class, 'update_candidate_mail'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail-setting/candidate', [MailController::class, 'post_update_candidate_mail'])->where('id', '[0-9]+');
+
         Route::post('/{id}/mail/interviewer', [InterviewController::class, 'send_mai_to_interviewers'])->where('id', '[0-9]+');
         Route::post('/{id}/mail/candidate', [InterviewController::class, 'send_mail_to_candidates'])->where('id', '[0-9]+');
     });
-
-    Route::get('/mail-setting/interviewer', [MailController::class, 'update_interviewer_mail']);
-    Route::post('/mail-setting/interviewer', [MailController::class, 'post_update_interviewer_mail']);
-
-    Route::get('/mail-setting/candidate', [MailController::class, 'update_candidate_mail']);
-    Route::post('/mail-setting/candidate', [MailController::class, 'post_update_candidate_mail']);
 
     Route::get('/profile', [ProfileController::class, 'update']);
     Route::post('/profile', [ProfileController::class, 'post_update']);
