@@ -14,6 +14,10 @@ class Candidate extends Model
         'name',
         'email',
         'phone',
+        'birthday',
+        'gender',
+        'identity_card',
+        'address',
         'cv_path',
         'cover_letter',
         'status'

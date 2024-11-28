@@ -63,6 +63,7 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
         Route::get('/', [CanidateController::class, 'list_applications']);
         Route::post('/', [CanidateController::class, 'search_applications']);
         Route::get('/{id}', [CanidateController::class, 'show']);
+        Route::post('/{id}', [CanidateController::class, 'update']);
         Route::get('/{id}/delete', [CanidateController::class, 'delete'])->where('id', '[0-9]+');
         Route::get('/{id}/recruitment-process', [CanidateController::class, 'show_recruiment_process'])->where('id', '[0-9]+');
         Route::post('/{id}/recruitment-process/comment', [CanidateController::class, 'post_comment'])->where('id', '[0-9]+');

@@ -60,7 +60,7 @@ class MailController extends Controller
 
     public function update_candidate_mail($id)
     {
-        $mail = Mail::where('name', 'candidate-notification')->first();
+        $mail = Mail::where('name', 'candidate-online-notification')->first();
 
         return view('company.candidate-mail', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
@@ -80,7 +80,7 @@ class MailController extends Controller
         DB::beginTransaction();
 
         try {
-            $mail = Mail::where('name', 'candidate-notification')->first();
+            $mail = Mail::where('name', 'candidate-online-notification')->first();
 
             if ($mail) {
                 $mail->subject = $validated['subject'];
@@ -88,7 +88,7 @@ class MailController extends Controller
                 $mail->save();
             } else {
                 Mail::create([
-                    'name' => 'candidate-notification',
+                    'name' => 'candidate-online-notification',
                     'subject' => $validated['subject'],
                     'content' => $validated['content']
                 ]);

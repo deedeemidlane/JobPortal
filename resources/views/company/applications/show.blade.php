@@ -28,22 +28,50 @@
         </div>
 
         <!-- Body -->
-        <form action="/company/applications/{{$application->id}}/update" method="POST" role="form">
+        <form action="/company/applications/{{$application->id}}" method="POST" role="form">
           @csrf
           <div class="row">
             <div class="col-md-6">
               <p class="text-xl font-bold text-green-600">Thông tin chung</p>
               <div class="form-group">
-                <label for="name">Họ và tên <span class="text-danger">*</span></label>
+                <label for="name">Họ và tên</label>
                 <input type="text" readonly class="form-control" placeholder="Họ và tên" name="name" id="name" value="{{ $application->candidate->name }}">
               </div>
               <div class="form-group">
-                <label for="email">Email <span class="text-danger">*</span></label>
+                <label for="email">Email</label>
                 <input type="text" readonly class="form-control" placeholder="Email" name="email" id="email" value="{{ $application->candidate->email }}">
               </div>
               <div class="form-group">
-                <label for="phone">Số điện thoại <span class="text-danger">*</span></label>
+                <label for="phone">Số điện thoại</label>
                 <input type="tel" readonly maxlength="10" class="form-control" placeholder="Số điện thoại" name="phone" id="phone" value="{{ $application->candidate->phone }}">
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <label for="birthday">Ngày sinh</label>
+                  <div class="relative ms-1">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                      <i class="bi bi-calendar-event-fill"></i>
+                    </div>
+                    <input id="birthday" autocomplete="off" datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="birthday" value="{{$application->candidate->birthday}}">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <label for="">Giới tính</label>
+                  <select class="form-select" name="gender" id="gender">
+                    <option value="" disabled selected>Giới tính</option>
+                    <option value="Nam" @if($application->candidate->gender === "Nam") selected @endif>Nam</option>
+                    <option value="Nữ" @if($application->candidate->gender === "Nữ") selected @endif>Nữ</option>
+                    <option value="Khác" @if($application->candidate->gender === "Khác") selected @endif>Khác</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <label for="identity_card">Số CMND/CCCD</label>
+                <input type="text" maxlength="12" class="form-control" placeholder="Số CMND/CCCD" name="identity_card" id="identity_card" value="{{ $application->candidate->identity_card }}">
+              </div>
+              <div class="form-group mt-3">
+                <label for="address">Địa chỉ</label>
+                <input type="text" class="form-control" placeholder="Địa chỉ" name="address" id="address" value="{{ $application->candidate->address }}">
               </div>
               <div class="py-3">
                 <label for="name" class="text-sm mr-3">Trạng thái: </label>
@@ -65,15 +93,15 @@
             <div class="col-md-6">
               <p class="text-xl font-bold text-green-600">Hồ sơ ứng viên</p>
               <div class="form-group">
-                <label for="name">Chiến dịch tuyển dụng <span class="text-danger">*</span></label>
+                <label for="name">Chiến dịch tuyển dụng</label>
                 <input type="text" readonly class="form-control" name="campaign_name" value="{{ $application->job->campaign->name }}">
               </div>
               <div class="form-group">
-                <label for="name">Vị trí ứng tuyển <span class="text-danger">*</span></label>
+                <label for="name">Vị trí ứng tuyển</label>
                 <input type="text" readonly class="form-control bg-white" name="job_name" value="{{ $application->job->name }}">
               </div>
               <div class="py-3">
-                <label for="name" class="text-sm mr-3">CV ứng tuyển <span class="text-danger">*</span> :</label>
+                <label for="name" class="text-sm mr-3">CV ứng tuyển :</label>
                 <button
                   type="button"
                   class="text-xs bg-green-500 text-white font-bold py-1.5 px-4 rounded-md hover:opacity-80"
@@ -83,14 +111,14 @@
               </div>
               @if ($application->candidate->cover_letter)
               <div class="form-group">
-                <label for="cover_letter" class="text-sm">Thư ứng tuyển <span class="text-danger">*</span></label>
+                <label for="cover_letter" class="text-sm">Thư ứng tuyển</label>
                 <textarea name="cover_letter" id="cover_letter" readonly class="form-control" placeholder="Thư ứng tuyển" rows="5">{{$application->candidate->cover_letter}}</textarea>
               </div>
               @endif
             </div>
           </div>
-          <div class="d-flex justify-content-end">
-            <!-- <button type="submit" class="btn bg-info text-white btn-md mt-4 mb-4">Cập nhật</button> -->
+          <div class="d-flex gap-2 justify-content-end">
+            <button type="submit" class="btn bg-info text-white btn-md mt-4 mb-4">Cập nhật</button>
             <a href="/company/applications/{{$application->id}}/delete" class="btn bg-danger text-white btn-md mt-4 mb-4">Xoá ứng viên</a>
           </div>
         </form>

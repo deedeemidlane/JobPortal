@@ -67,6 +67,23 @@ class CanidateController extends Controller
         ]);
     }
 
+    public function update(Request $request, $id)
+    {
+        $application = Application::findOrFail($id);
+        $candidate = $application->candidate;
+
+        $candidate->birthday = !is_null($request->input('birthday')) ? $request->input('birthday') : $candidate->birthday;
+        $candidate->gender = !is_null($request->input('gender')) ? $request->input('gender') : $candidate->gender;
+        $candidate->identity_card = !is_null($request->input('identity_card')) ? $request->input('identity_card') : $candidate->identity_card;
+        $candidate->address = !is_null($request->input('address')) ? $request->input('address') : $candidate->address;
+
+        $candidate->save();
+
+        session()->flash('success', 'Cập nhật hồ sơ ứng viên thành công!');
+
+        return back();
+    }
+
     public function show_recruiment_process($id)
     {
         $application = Application::findOrFail($id);

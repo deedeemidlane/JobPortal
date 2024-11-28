@@ -210,7 +210,7 @@ class InterviewController extends Controller
 
         $interviewer_mail = MailModel::where('name', 'interviewer-notification')->first();
 
-        $candidate_mail = MailModel::where('name', 'candidate-notification')->first();
+        $candidate_mail = MailModel::where('name', 'candidate-online-notification')->first();
 
         return view('company.interviews.show', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
@@ -377,7 +377,7 @@ class InterviewController extends Controller
             ->get()
             ->pluck('candidate');
 
-        $candidate_mail = MailModel::where('name', 'candidate-notification')->first();
+        $candidate_mail = MailModel::where('name', 'candidate-online-notification')->first();
 
         foreach ($candidates as $candidate) {
             $content = str_replace(
