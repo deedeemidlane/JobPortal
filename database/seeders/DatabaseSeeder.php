@@ -16,13 +16,13 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'email' => 'admin@gmail.com',
-        //     'password' => bcrypt('123456'),
-        //     'name' => 'Admin',
-        //     'role' => 'ADMIN',
-        //     'phone' => '0123456789'
-        // ]);
+        User::factory()->create([
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('123456'),
+            'name' => 'Admin',
+            'role' => 'ADMIN',
+            'phone' => '0123456789'
+        ]);
 
         Mail::create([
             'name' => 'interviewer-notification',
