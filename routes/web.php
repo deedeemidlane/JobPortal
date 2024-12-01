@@ -73,8 +73,6 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
     Route::prefix('interviews')->group(function () {
         Route::get('/', [InterviewController::class, 'list_interviews']);
         Route::post('/', [InterviewController::class, 'search_interviews']);
-        // Route::get('pre-create', [InterviewController::class, 'pre_create']);
-        // Route::post('pre-create', [InterviewController::class, 'post_pre_create']);
         Route::get('create', [InterviewController::class, 'create']);
         Route::post('create', [InterviewController::class, 'post_create']);
         Route::get('create/select-candidate', [InterviewController::class, 'select_candidate']);
@@ -88,11 +86,27 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
         Route::get('/{id}/mail-setting/interviewer', [MailController::class, 'update_interviewer_mail'])->where('id', '[0-9]+');
         Route::post('/{id}/mail-setting/interviewer', [MailController::class, 'post_update_interviewer_mail'])->where('id', '[0-9]+');
 
-        Route::get('/{id}/mail-setting/candidate', [MailController::class, 'update_candidate_mail'])->where('id', '[0-9]+');
-        Route::post('/{id}/mail-setting/candidate', [MailController::class, 'post_update_candidate_mail'])->where('id', '[0-9]+');
+        Route::get('/{id}/mail-setting/candidate-online', [MailController::class, 'update_online_candidate_mail'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail-setting/candidate-online', [MailController::class, 'post_update_online_candidate_mail'])->where('id', '[0-9]+');
+
+        Route::get('/{id}/mail-setting/candidate-offline', [MailController::class, 'update_offline_candidate_mail'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail-setting/candidate-offline', [MailController::class, 'post_update_offline_candidate_mail'])->where('id', '[0-9]+');
+
+        Route::get('/{id}/mail-setting/candidate-passed', [MailController::class, 'update_passed_mail'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail-setting/candidate-passed', [MailController::class, 'post_update_passed_mail'])->where('id', '[0-9]+');
+
+        Route::get('/{id}/mail-setting/candidate-passed-final', [MailController::class, 'update_final_passed_mail'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail-setting/candidate-passed-final', [MailController::class, 'post_update_final_passed_mail'])->where('id', '[0-9]+');
+
+        Route::get('/{id}/mail-setting/candidate-failed', [MailController::class, 'update_failed_mail'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail-setting/candidate-failed', [MailController::class, 'post_update_failed_mail'])->where('id', '[0-9]+');
 
         Route::post('/{id}/mail/interviewer', [InterviewController::class, 'send_mai_to_interviewers'])->where('id', '[0-9]+');
-        Route::post('/{id}/mail/candidate', [InterviewController::class, 'send_mail_to_candidates'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail/candidate-online', [InterviewController::class, 'send_mail_to_online_candidates'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail/candidate-offline', [InterviewController::class, 'send_mail_to_offline_candidates'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail/candidate-passed', [InterviewController::class, 'send_passed_mail'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail/candidate-passed-final', [InterviewController::class, 'send_final_passed_mail'])->where('id', '[0-9]+');
+        Route::post('/{id}/mail/candidate-failed', [InterviewController::class, 'send_failed_mail'])->where('id', '[0-9]+');
     });
 
     Route::get('/profile', [ProfileController::class, 'update']);

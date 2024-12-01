@@ -66,6 +66,8 @@
                     <span class="bg-green-400 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
                     @elseif ($candidate->status === "Không trúng tuyển")
                     <span class="bg-gray-400 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
+                    @elseif ($candidate->status === "Ứng tuyển")
+                    <span class="bg-blue-500 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
                     @else
                     <span class="bg-yellow-200 text-gray-600 py-0.5 px-2 rounded">{{$candidate->status}}</span>
                     @endif
@@ -110,8 +112,7 @@
           <div class="text-center py-5">
             Chưa có lượt ứng tuyển nào trên hệ thống
           </div>
-          @endif
-          @if($candidates->count() == 0)
+          @elseif($candidates->count() == 0)
           <div class="text-center py-5">
             Không tìm thấy ứng viên phù hợp
           </div>

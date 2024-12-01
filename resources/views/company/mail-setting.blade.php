@@ -7,7 +7,7 @@
     <div class="card-header pb-0 px-4">
       <div class="d-flex flex-row justify-content-between">
         <div>
-          <h5 class="mb-0">Thiết lập email thông báo cho ứng viên</h5>
+          <h5 class="mb-0">{{$title}}</h5>
         </div>
       </div>
     </div>
@@ -44,6 +44,5 @@
     </div>
   </div>
 </div>
-
 
 @endsection

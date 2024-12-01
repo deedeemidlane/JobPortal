@@ -62,12 +62,12 @@
             </div>
             <div class="w-full">
               <div
-                @if($status=='Trúng tuyển' ) class="w-full rounded-lg py-2 px-4 border-2 border-green-200 bg-green-100 text-black"
+                @if($status=='Trúng tuyển' || $status=='Không trúng tuyển' ) class="w-full rounded-lg py-2 px-4 border-2 border-green-200 bg-green-100 text-black"
                 @else
                 class="w-full rounded-lg py-2 px-4"
                 @endif>
                 <i class="fa-solid fa-cube"></i>
-                Trúng tuyển
+                Kết quả
               </div>
             </div>
           </div>
@@ -86,8 +86,8 @@
                 </button>
               </div>
               <div class="form-group">
-                <label for="" class="text-sm">Đánh giá</label>
-                <textarea name="comment" class="form-control" placeholder="Vui lòng đánh giá tại đây" rows="5">{{$comment}}</textarea>
+                <label for="" class="text-sm">Ghi chú</label>
+                <textarea name="comment" class="form-control" placeholder="Ghi chú" rows="5">{{$comment}}</textarea>
               </div>
               <div>
                 <button type="submit" class="btn btn-info">Cập nhật</button>
@@ -187,8 +187,8 @@
               </div>
               @endif
               <div class="form-group">
-                <label for="" class="text-sm mx-0 text-black">Đánh giá</label>
-                <textarea name="comment" class="form-control" placeholder="Vui lòng đánh giá tại đây" rows="5">{{$comment}}</textarea>
+                <label for="" class="text-sm mx-0 text-black">Ghi chú</label>
+                <textarea name="comment" class="form-control" placeholder="Ghi chú" rows="5">{{$comment}}</textarea>
               </div>
               <div>
                 <button type="submit" class="btn btn-info">Cập nhật</button>
@@ -288,8 +288,8 @@
               </div>
               @endif
               <div class="form-group">
-                <label for="" class="text-sm mx-0 text-black">Đánh giá</label>
-                <textarea name="comment" class="form-control" placeholder="Vui lòng đánh giá tại đây" rows="5">{{$comment}}</textarea>
+                <label for="" class="text-sm mx-0 text-black">Ghi chú</label>
+                <textarea name="comment" class="form-control" placeholder="Ghi chú" rows="5">{{$comment}}</textarea>
               </div>
               <div>
                 <button type="submit" class="btn btn-info">Cập nhật</button>
@@ -302,6 +302,11 @@
             @case("Trúng tuyển")
             <div class="h-full flex gap-1 justify-center items-center text-lg font-bold">
               <i class="bi bi-check-circle-fill text-primary"></i>Ứng viên đã trúng tuyển.
+            </div>
+            @break
+            @case("Không trúng tuyển")
+            <div class="h-full flex gap-1 justify-center items-center text-lg font-bold">
+              <i class="bi bi-x-circle-fill text-danger"></i>Ứng viên không trúng tuyển
             </div>
             @break
             @endswitch

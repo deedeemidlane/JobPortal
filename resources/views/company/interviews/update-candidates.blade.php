@@ -55,6 +55,8 @@
                     <span class="bg-green-400 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
                     @elseif ($candidate->status === "Không trúng tuyển")
                     <span class="bg-gray-400 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
+                    @elseif ($candidate->status === "Ứng tuyển")
+                    <span class="bg-blue-500 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
                     @else
                     <span class="bg-yellow-200 text-gray-600 py-0.5 px-2 rounded">{{$candidate->status}}</span>
                     @endif
@@ -86,6 +88,8 @@
                     <span class="bg-green-400 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
                     @elseif ($candidate->status === "Không trúng tuyển")
                     <span class="bg-gray-400 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
+                    @elseif ($candidate->status === "Ứng tuyển")
+                    <span class="bg-blue-500 text-white py-0.5 px-2 rounded">{{$candidate->status}}</span>
                     @else
                     <span class="bg-yellow-200 text-gray-600 py-0.5 px-2 rounded">{{$candidate->status}}</span>
                     @endif
