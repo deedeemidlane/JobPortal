@@ -23,6 +23,8 @@ Route::post('/jobs/{id}', [JobController::class, 'apply'])->where('id', '[0-9]+'
 Route::middleware([RedirectIfAuthenticated::class])->group(function () {
     Route::get('/login', [SessionsController::class, 'create'])->name('login');
     Route::post('/login', [SessionsController::class, 'store']);
+    Route::get('/login/forgot-password', [SessionsController::class, 'forgot_password']);
+    Route::post('/login/forgot-password', [SessionsController::class, 'post_forgot_password']);
 });
 
 Route::prefix('company')->middleware(['auth'])->group(function () {
@@ -111,5 +113,7 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'update']);
     Route::post('/profile', [ProfileController::class, 'post_update']);
+    Route::get('/profile/change-password', [ProfileController::class, 'change_password']);
+    Route::post('/profile/change-password', [ProfileController::class, 'post_change_password']);
     Route::get('/logout', [SessionsController::class, 'destroy']);
 });

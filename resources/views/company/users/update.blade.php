@@ -60,17 +60,6 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="password">Mật khẩu mới <span class=" text-secondary">(Không bắt buộc)</span></label>
-                  <input type="password" class="form-control" placeholder="Mật khẩu mới" name="password" id="password" aria-label="Password" aria-describedby="password-addon">
-                  @error('password')
-                  <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                  @enderror
-                </div>
-              </div>
-            </div>
             <div class="d-flex justify-content-end">
               <button type="submit" class="btn bg-primary text-white btn-md mt-4 mb-4">Lưu</button>
             </div>

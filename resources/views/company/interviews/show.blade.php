@@ -248,7 +248,7 @@
             @if($interview->failed_mail_status === 'sent')
             <div class="my-4 flex items-center gap-1 text-primary text-sm font-bold">
               <i class="bi bi-check-circle-fill"></i>
-              Đã gửi mail thông báo trúng tuyển
+              Đã gửi mail thông báo không trúng tuyển
             </div>
             @else
             <button type="button" class="btn btn-info btn-md my-4" data-bs-toggle="modal" data-bs-target="#failedMail">

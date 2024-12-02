@@ -5,6 +5,7 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\Candidate;
+use App\Models\InterviewCandidate;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -90,10 +91,15 @@ class CanidateController extends Controller
         $candidate_status = $application->candidate->status;
         $candidate_comment = $application->candidate->comment;
 
-        $interview = $application->candidate->interview_candidate?->interview;
+        $interview_candidate = InterviewCandidate::where('candidate_id', $application->candidate->id)
+            ->where('type', $candidate_status)
+            ->first();
+
+        $interview = $interview_candidate?->interview;
+
         $interviewers = [];
 
-        if ($interview && $interview->type === $candidate_status) {
+        if ($interview) {
             $interviewer_names = unserialize($interview->interviewer_names);
             $interviewer_emails = unserialize($interview->interviewer_emails);
 
@@ -103,8 +109,6 @@ class CanidateController extends Controller
                     'email' => $interviewer_emails[$i]
                 ];
             }
-        } else {
-            $interview = null;
         }
 
         return view('company.applications.show-recruitment-process', [

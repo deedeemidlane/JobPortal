@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -34,7 +35,7 @@ class UserController extends Controller
     {
         $validated = $request->validated();
 
-        $validated['password'] = bcrypt($validated['password']);
+        $validated['password'] = Hash::make($validated['password']);
 
         DB::beginTransaction();
 
@@ -77,7 +78,6 @@ class UserController extends Controller
         $user->email = !is_null($validated['email']) ? $validated['email'] : $user->email;
         $user->role = !is_null($validated['role']) ? $validated['role'] : $user->role;
         $user->phone = !is_null($validated['phone']) ? $validated['phone'] : $user->phone;
-        $user->password = !is_null($validated['password']) ? bcrypt($validated['password']) : $user->password;
         $user->save();
 
         session()->flash('success', 'Cập nhật tài khoản thành công!');
