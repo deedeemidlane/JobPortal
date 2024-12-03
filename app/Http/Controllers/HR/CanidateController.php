@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\HR;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateApplicationRequest;
 use App\Models\Application;
 use App\Models\Candidate;
 use App\Models\InterviewCandidate;
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CanidateController extends Controller
 {
@@ -55,6 +58,70 @@ class CanidateController extends Controller
         ]);
 
         return redirect($urlWithQuery);
+    }
+
+    public function create()
+    {
+        $jobs = Job::all();
+
+        return view('company.applications.create', [
+            "role" => User::DISPLAYED_ROLE[Auth::user()->role],
+            "breadcrumb_tabs" => ["Quản lý ứng viên" => "/company/applications", "Thêm ứng viên" => ""],
+            "jobs" => $jobs
+        ]);
+    }
+
+    public function post_create(CreateApplicationRequest $request)
+    {
+        $validated = $request->validated();
+
+        $current_job = Job::findOrFail($validated['job_id']);
+
+        $cv_path = "";
+
+        if ($request->hasfile('cv')) {
+            $cv = $request->file('cv');
+            $cvName = time() . rand(1, 100) . '.' . $cv->extension();
+
+            if ($cv->move(public_path('uploads'), $cvName)) {
+                $cv_path = '/' . 'uploads/' . $cvName;
+                echo $cv_path;
+            } else {
+                session()->flash('error', 'Upload CV thất bại');
+                return back();
+            }
+        } else {
+            session()->flash('error', 'Không tìm thấy CV');
+            return back();
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $new_candidate = Candidate::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'],
+                'cv_path' => $cv_path,
+                'status' => 'Ứng tuyển'
+            ]);
+
+            Application::create([
+                'job_id' => $current_job->id,
+                'candidate_id' => $new_candidate->id
+            ]);
+
+            session()->flash('success', 'Thêm ứng viên thành công!');
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            throw $th;
+            // session()->flash('error', 'Có lỗi xảy ra');
+
+            DB::rollBack();
+        }
+
+        return redirect('/company/applications');
     }
 
     public function show($id)

@@ -64,6 +64,8 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
     Route::prefix('applications')->group(function () {
         Route::get('/', [CanidateController::class, 'list_applications']);
         Route::post('/', [CanidateController::class, 'search_applications']);
+        Route::get('/create', [CanidateController::class, 'create']);
+        Route::post('/create', [CanidateController::class, 'post_create']);
         Route::get('/{id}', [CanidateController::class, 'show']);
         Route::post('/{id}', [CanidateController::class, 'update']);
         Route::get('/{id}/delete', [CanidateController::class, 'delete'])->where('id', '[0-9]+');

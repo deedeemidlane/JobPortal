@@ -119,7 +119,9 @@
           </div>
           <div class="d-flex gap-2 justify-content-end">
             <button type="submit" class="btn bg-info text-white btn-md mt-4 mb-4">Cập nhật</button>
+            @if($role !== "HR")
             <a href="/company/applications/{{$application->id}}/delete" class="btn bg-danger text-white btn-md mt-4 mb-4">Xoá ứng viên</a>
+            @endif
           </div>
         </form>
       </div>

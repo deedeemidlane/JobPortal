@@ -5,16 +5,22 @@
 <div class="row">
   <div class="col-12">
     <div class="card mb-4">
-      <div class="card-header flex justify-start flex-col gap-3">
-        <h6 class="mb-0">Danh sách ứng viên</h6>
-        <div>
-          <button
-            type="button"
-            class="bg-blue-500 text-white font-bold d-flex align-items-center gap-1 px-2.5 hover:opacity-90 rounded-lg text-sm"
-            data-bs-toggle="modal" data-bs-target="#searchModal">
-            <i class="bi bi-filter text-lg mt-1"></i>
-            Lọc
-          </button>
+      <div class="card-header pb-4">
+        <div class="d-flex flex-row justify-content-between">
+          <h5 class="mb-0">Danh sách ứng viên</h5>
+          <div class="flex gap-3">
+            <button
+              type="button"
+              class="bg-blue-500 text-white font-bold d-flex align-items-center gap-1 px-3 hover:opacity-90 rounded-lg text-sm"
+              data-bs-toggle="modal" data-bs-target="#searchModal">
+              <i class="bi bi-filter text-lg mt-1"></i>
+              Lọc
+            </button>
+            <a href="/company/applications/create" class="btn bg-gradient-primary btn-sm mb-0 d-flex align-items-center gap-2 px-4" type="button">
+              <span class="text-md">+</span>
+              Thêm ứng viên
+            </a>
+          </div>
         </div>
       </div>
       <div class="card-body px-0 pt-0 pb-2">
