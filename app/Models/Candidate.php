@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Candidate extends Model
@@ -28,8 +29,8 @@ class Candidate extends Model
         return $this->hasOne(Application::class);
     }
 
-    public function interview_candidate(): HasOne
+    public function interview_candidates(): HasMany
     {
-        return $this->hasOne(InterviewCandidate::class);
+        return $this->hasMany(InterviewCandidate::class);
     }
 }

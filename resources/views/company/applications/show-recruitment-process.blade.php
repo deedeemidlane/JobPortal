@@ -192,9 +192,9 @@
               </div>
               <div>
                 <button type="submit" class="btn btn-info">Cập nhật</button>
-                <a
+                <!-- <a
                   href="/company/applications/{{$application->id}}/recruitment-process/update-status"
-                  class="btn btn-primary">Chuyển sang phỏng vấn doanh nghiệp</a>
+                  class="btn btn-primary">Chuyển sang phỏng vấn doanh nghiệp</a> -->
               </div>
             </form>
             @break
@@ -293,9 +293,9 @@
               </div>
               <div>
                 <button type="submit" class="btn btn-info">Cập nhật</button>
-                <a
+                <!-- <a
                   href="/company/applications/{{$application->id}}/recruitment-process/update-status"
-                  class="btn btn-primary">Xác nhận trúng tuyển</a>
+                  class="btn btn-primary">Xác nhận trúng tuyển</a> -->
               </div>
             </form>
             @break

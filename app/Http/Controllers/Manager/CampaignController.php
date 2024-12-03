@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCampaignRequest;
 use App\Http\Requests\CreateRecruitmentNewsRequest;
 use App\Models\Campaign;
+use App\Models\Interview;
 use App\Models\Job;
 use App\Models\User;
 use DateTime;
@@ -160,7 +161,36 @@ class CampaignController extends Controller
     public function delete($id)
     {
         $campaign = Campaign::findOrFail($id);
+        $job_ids = $campaign->jobs->pluck('id');
+
+        foreach ($job_ids as $job_id) {
+            $job = Job::find($job_id);
+            // echo $job;
+            $applications = $job->applications;
+
+            foreach ($applications as $application) {
+
+                $candidate = $application->candidate;
+                $interview_candidates = $candidate->interview_candidates;
+                $candidate->delete();
+
+                // echo $candidate;
+                // echo "-------";
+
+                foreach ($interview_candidates as $interview_candidate) {
+                    $interview = Interview::find($interview_candidate->interview_id);
+
+                    if ($interview->interview_candidate->count() === 0) {
+                        $interview->delete();
+                    }
+                }
+            }
+
+            $job->delete();
+        }
+
         $campaign->delete();
+
         session()->flash('success', 'Xóa chiến dịch thành công!');
         return redirect('/company/campaigns');
     }

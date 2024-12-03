@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateApplicationRequest;
 use App\Models\Application;
 use App\Models\Candidate;
+use App\Models\Interview;
 use App\Models\InterviewCandidate;
 use App\Models\Job;
 use App\Models\User;
@@ -229,7 +230,16 @@ class CanidateController extends Controller
     {
         $application = Application::findOrFail($id);
         $candidate = $application->candidate;
+        $interview_candidates = $candidate->interview_candidates;
         $candidate->delete();
+
+        foreach ($interview_candidates as $interview_candidate) {
+            $interview = Interview::findOrFail($interview_candidate->interview_id);
+
+            if ($interview->interview_candidate->count() === 0) {
+                $interview->delete();
+            }
+        }
 
         session()->flash('success', 'Xóa ứng viên thành công!');
 

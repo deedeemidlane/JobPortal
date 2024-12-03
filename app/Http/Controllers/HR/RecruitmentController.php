@@ -5,6 +5,7 @@ namespace App\Http\Controllers\HR;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRecruitmentNewsRequest;
 use App\Models\Campaign;
+use App\Models\Interview;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -184,7 +185,24 @@ class RecruitmentController extends Controller
     public function delete($id, Request $request)
     {
         $job = Job::findOrFail($id);
+
+        $applications = $job->applications;
+
         $job->delete();
+
+        foreach ($applications as $application) {
+            $candidate = $application->candidate;
+            $interview_candidates = $candidate->interview_candidates;
+            $candidate->delete();
+
+            foreach ($interview_candidates as $interview_candidate) {
+                $interview = Interview::findOrFail($interview_candidate->interview_id);
+
+                if ($interview->interview_candidate->count() === 0) {
+                    $interview->delete();
+                }
+            }
+        }
 
         session()->flash('success', 'Xóa tin tuyển dụng thành công!');
 

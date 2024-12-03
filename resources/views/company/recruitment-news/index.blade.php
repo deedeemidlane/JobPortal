@@ -93,7 +93,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <h6 class="mb-0 text-danger">Bạn có chắc chắc muốn xóa tin tuyển dụng này?</h6>
+                <p class="text-black">Xóa tin tuyển dụng sẽ đồng thời xóa tất cả ứng viên ứng tuyển cho vị trí này.</p>
+                <h6 class="mb-0 text-danger">Bạn có chắc chắc muốn xóa chiến dịch này?</h6>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>

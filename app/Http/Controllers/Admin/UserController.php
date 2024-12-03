@@ -89,10 +89,13 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $user->delete();
-
-        session()->flash('success', 'Xóa tài khoản thành công!');
-
-        return redirect('/company/users');
+        if ($user->campaigns->count() > 0) {
+            session()->flash('error', 'Không thể xoá do tài khoản này đang phụ trách (các) chiến dịch tuyển dụng.');
+            return redirect('/company/users');
+        } else {
+            $user->delete();
+            session()->flash('success', 'Xóa tài khoản thành công!');
+            return redirect('/company/users');
+        }
     }
 }

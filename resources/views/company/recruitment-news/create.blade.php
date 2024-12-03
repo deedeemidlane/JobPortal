@@ -110,7 +110,7 @@
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                   <i class="bi bi-calendar-event-fill"></i>
                 </div>
-                <input id="datepicker-format" datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="deadline" id="deadline" value="{{ old('deadline') }}">
+                <input datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" autocomplete="off" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="deadline" id="deadline" value="{{ old('deadline') }}">
               </div>
               @error('deadline')
               <p class="text-danger text-xs mt-2">{{ $message }}</p>

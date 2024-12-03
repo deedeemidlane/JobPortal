@@ -49,7 +49,7 @@
                       <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <i class="bi bi-calendar-event-fill"></i>
                       </div>
-                      <input id="datepicker-range-start" datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="start_time" id="campaign_start_time" value="{{ old('start_time') }}">
+                      <input datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" autocomplete="off" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="start_time" id="campaign_start_time" value="{{ old('start_time') }}">
                     </div>
                   </div>
                   @error('start_time')
@@ -61,7 +61,7 @@
                       <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <i class="bi bi-calendar-event-fill"></i>
                       </div>
-                      <input id="datepicker-range-end" datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="end_time" id="campaign_end_time" value="{{ old('end_time') }}">
+                      <input datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text" autocomplete="off" class="form-control p-2 ps-5" placeholder="dd/mm/yyyy" name="end_time" id="campaign_end_time" value="{{ old('end_time') }}">
                     </div>
                   </div>
                   @error('end_time')

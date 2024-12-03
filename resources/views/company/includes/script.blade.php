@@ -15,7 +15,7 @@
     "closeButton": true
   }
   toastr.success("{{session('success')}}", 'Thành công!', {
-    timeOut: 1000
+    timeOut: 2000
   });
 </script>
 @endif
@@ -27,7 +27,7 @@
     "closeButton": true
   }
   toastr.error("{{session('error')}}", 'Thất bại!', {
-    timeOut: 1000
+    timeOut: 3000
   });
 </script>
 @endif
