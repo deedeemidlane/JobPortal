@@ -14,8 +14,8 @@ class JobController extends Controller
 {
     public function home()
     {
-        $latest_jobs = Job::orderByDesc('created_at')->limit(5)->get();
-        $popular_jobs = Job::withCount('applications')->orderByDesc('applications_count')->limit(5)->get();
+        $latest_jobs = Job::where('status', 'shown')->orderByDesc('created_at')->limit(5)->get();
+        $popular_jobs = Job::where('status', 'shown')->withCount('applications')->orderByDesc('applications_count')->limit(5)->get();
 
         return view('candidate.home', [
             'current_page' => 'home',
@@ -26,7 +26,7 @@ class JobController extends Controller
 
     public function list_jobs(Request $request)
     {
-        $jobs = Job::query();
+        $jobs = Job::query()->where('status', 'shown');
 
         $is_jobs_empty = $jobs->get()->count();
 

@@ -211,4 +211,26 @@ class RecruitmentController extends Controller
 
         return redirect('/company/recruitment-news' . $query);
     }
+
+    public function hide($id)
+    {
+        $job = Job::findOrFail($id);
+        $job->status = "hidden";
+        $job->save();
+
+        session()->flash('success', 'Đã ẩn tin tuyển dụng khỏi trang đăng tuyển');
+
+        return back();
+    }
+
+    public function show($id)
+    {
+        $job = Job::findOrFail($id);
+        $job->status = "shown";
+        $job->save();
+
+        session()->flash('success', 'Tin tuyển dụng sẽ xuất hiện lại trên trang đăng tuyển');
+
+        return back();
+    }
 }

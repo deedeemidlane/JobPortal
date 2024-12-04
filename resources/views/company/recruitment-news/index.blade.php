@@ -76,10 +76,19 @@
             </div>
           </div>
           <div class="ms-auto text-end">
-            <a class="btn btn-link text-dark px-3 mb-0 d-block d-lg-inline-block" href="/company/recruitment-news/update/{{$job->id}}{{$query}}">
+            @if($job->status === "shown")
+            <a class="btn btn-link text-info mb-0 d-block d-lg-inline-block" href="/company/recruitment-news/{{$job->id}}/hide{{$query}}">
+              <i class="fa-solid fa-eye-slash text-info me-2"></i>Ẩn
+            </a>
+            @else
+            <a class="btn btn-link text-info mb-0 d-block d-lg-inline-block" href="/company/recruitment-news/{{$job->id}}/show{{$query}}">
+              <i class="fa-solid fa-eye text-info me-2"></i>Hiện
+            </a>
+            @endif
+            <a class="btn btn-link text-dark px-2 mb-0 d-block d-lg-inline-block" href="/company/recruitment-news/update/{{$job->id}}{{$query}}">
               <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Chỉnh sửa
             </a>
-            <button class="btn btn-link text-danger text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$job->id}}">
+            <button class="btn btn-link text-danger text-gradient mb-0" data-bs-toggle="modal" data-bs-target="#confirmModal-{{$job->id}}">
               <i class="far fa-trash-alt me-2"></i>Xóa
             </button>
           </div>

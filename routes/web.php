@@ -59,6 +59,8 @@ Route::prefix('company')->middleware(['auth'])->group(function () {
         Route::get('update/{id}', [RecruitmentController::class, 'update'])->where('id', '[0-9]+');
         Route::post('update/{id}', [RecruitmentController::class, 'post_update'])->where('id', '[0-9]+');
         Route::get('delete/{id}', [RecruitmentController::class, 'delete'])->where('id', '[0-9]+');
+        Route::get('/{id}/hide', [RecruitmentController::class, 'hide'])->where('id', '[0-9]+');
+        Route::get('/{id}/show', [RecruitmentController::class, 'show'])->where('id', '[0-9]+');
     });
 
     Route::prefix('applications')->group(function () {
