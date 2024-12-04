@@ -126,6 +126,16 @@ class JobController extends Controller
 
         $current_job = Job::findOrFail($id);
 
+        $candidates = Application::where('job_id', $current_job->id)
+            ->with('candidate')->get()->pluck('candidate');
+
+        foreach ($candidates as $candidate) {
+            if ($candidate->email === $validated['candidate_email']) {
+                session()->flash('error', 'Email đã được sử dụng để ứng tuyển cho vị trí này.');
+                return back();
+            }
+        }
+
         $cv_path = "";
 
         if ($request->hasfile('cv')) {
