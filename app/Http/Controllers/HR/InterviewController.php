@@ -123,6 +123,8 @@ class InterviewController extends Controller
         $pre_interview_info = [
             'name' => $validated['name'],
             'type' => $validated['type'],
+            'link' => $request->input('link'),
+            'location' => $request->input('location'),
             'date' => $validated['date'],
             'start_time' => $request->input('start_time'),
             'end_time' => $request->input('end_time'),
@@ -160,6 +162,8 @@ class InterviewController extends Controller
             $new_interview = Interview::create([
                 'name' => $pre_interview_info['name'],
                 'type' => $pre_interview_info['type'],
+                'link' => $pre_interview_info['link'],
+                'location' => $pre_interview_info['location'],
                 'date' => $pre_interview_info['date'],
                 'start_time' => $pre_interview_info['start_time'],
                 'end_time' => $pre_interview_info['end_time'],
@@ -232,6 +236,14 @@ class InterviewController extends Controller
 
         $failed_mail = MailModel::where('name', 'failed-notification')->first();
 
+        $has_passed_candidates = $candidates->contains(function ($candidate) {
+            return $candidate->status !== "Không trúng tuyển";
+        });
+
+        $has_failed_candidates = $candidates->contains(function ($candidate) {
+            return $candidate->status === "Không trúng tuyển";
+        });
+
         return view('company.interviews.show', [
             "role" => User::DISPLAYED_ROLE[Auth::user()->role],
             "breadcrumb_tabs" => ["Lịch phỏng vấn" => "/company/interviews", "Thông tin chi tiết" => ""],
@@ -241,7 +253,9 @@ class InterviewController extends Controller
             "interviewer_mail" => $interviewer_mail,
             "candidate_mail" => $candidate_mail,
             "passed_mail" => $passed_mail,
-            "failed_mail" => $failed_mail
+            "failed_mail" => $failed_mail,
+            "has_failed_candidates" => $has_failed_candidates,
+            "has_passed_candidates" => $has_passed_candidates
         ]);
     }
 
@@ -298,6 +312,8 @@ class InterviewController extends Controller
 
             $interview->name = !is_null($validated['name']) ? $validated['name'] : $interview->name;
             $interview->type = !is_null($validated['type']) ? $validated['type'] : $interview->type;
+            $interview->link = !is_null($request->input('link')) ? $request->input('link') : $interview->link;
+            $interview->location = !is_null($request->input('location')) ? $request->input('location') : $interview->location;
             $interview->date = !is_null($validated['date']) ? $validated['date'] : $interview->date;
             $interview->start_time = !is_null($request->input('start_time')) ? $request->input('start_time') : $interview->start_time;
             $interview->end_time = !is_null($request->input('end_time')) ? $request->input('end_time') : $interview->end_time;
@@ -310,7 +326,7 @@ class InterviewController extends Controller
 
         session()->flash('success', 'Cập nhật lịch phỏng vấn thành công!');
 
-        return redirect('/company/interviews');
+        return redirect('/company/interviews/' . $id);
     }
 
     public function delete($id)
@@ -490,7 +506,7 @@ class InterviewController extends Controller
             );
             $content = str_replace(
                 '[Địa điểm]',
-                $candidate->application->job->workplace,
+                $interview->location,
                 $content
             );
 

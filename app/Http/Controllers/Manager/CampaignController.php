@@ -155,7 +155,7 @@ class CampaignController extends Controller
 
         session()->flash('success', 'Cập nhật thông tin chiến dịch thành công!');
 
-        return redirect('/company/campaigns');
+        return redirect('/company/campaigns/' . $id);
     }
 
     public function delete($id)

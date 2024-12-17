@@ -36,6 +36,14 @@
                 <p class="text-danger text-xs mt-2">{{ $message }}</p>
                 @enderror
               </div>
+              <div class="form-group hidden" id="link_input">
+                <label for="link" class="text-sm">Link phỏng vấn</label>
+                <input type="text" class="form-control" placeholder="Link phỏng vấn" name="link" id="link" value="{{ old('link') }}">
+              </div>
+              <div class="form-group hidden" id="location_input">
+                <label for="location" class="text-sm">Địa điểm phỏng vấn</label>
+                <input type="text" class="form-control" placeholder="Địa điểm phỏng vấn" name="location" id="location" value="{{ old('location') }}">
+              </div>
             </div>
             <div class="col-md-6 ps-md-5">
               <div class="form-group">
@@ -123,6 +131,20 @@
 </div>
 
 <script>
+  // Show link / location input
+  document.getElementById("type").addEventListener("change", function() {
+    console.log("interview type input: ", this.value);
+
+    if (this.value === "Phỏng vấn chuyên sâu") {
+      document.getElementById("link_input").classList.remove("hidden");
+      document.getElementById("location_input").classList.add("hidden");
+    } else {
+      document.getElementById("link_input").classList.add("hidden");
+      document.getElementById("location_input").classList.remove("hidden");
+    }
+  });
+
+  // Add interviewers
   let interviewer_index = 1;
   const interviewer_indices = [];
 

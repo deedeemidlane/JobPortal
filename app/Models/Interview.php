@@ -13,6 +13,8 @@ class Interview extends Model
     protected $fillable = [
         'name',
         'type',
+        'link',
+        'location',
         'date',
         'start_time',
         'end_time',

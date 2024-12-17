@@ -45,6 +45,17 @@
               <p class="text-danger text-xs mt-2">{{ $message }}</p>
               @enderror
             </div>
+            @if($interview->type === "Phỏng vấn chuyên sâu")
+            <div class="form-group" id="link_input">
+              <label for="link" class="text-sm">Link phỏng vấn</label>
+              <input type="text" class="form-control" placeholder="Link phỏng vấn" name="link" id="link" value="{{ $interview->link }}">
+            </div>
+            @else
+            <div class="form-group" id="location_input">
+              <label for="location" class="text-sm">Địa điểm phỏng vấn</label>
+              <input type="text" class="form-control" placeholder="Địa điểm phỏng vấn" name="location" id="location" value="{{ $interview->location }}">
+            </div>
+            @endif
           </div>
           <div class="col-md-6 ps-md-5">
             <div class="form-group">
@@ -235,6 +246,7 @@
         <div class="flex justify-between mt-4">
           @if($interview->status === 'Đã kết thúc')
           <div class="d-flex gap-4">
+            @if($has_passed_candidates)
             @if($interview->passed_mail_status === 'sent')
             <div class="my-4 flex items-center gap-1 text-primary text-sm font-bold">
               <i class="bi bi-check-circle-fill"></i>
@@ -245,6 +257,9 @@
               Gửi mail thông báo trúng tuyển
             </button>
             @endif
+            @endif
+
+            @if($has_failed_candidates)
             @if($interview->failed_mail_status === 'sent')
             <div class="my-4 flex items-center gap-1 text-primary text-sm font-bold">
               <i class="bi bi-check-circle-fill"></i>
@@ -254,6 +269,7 @@
             <button type="button" class="btn btn-info btn-md my-4" data-bs-toggle="modal" data-bs-target="#failedMail">
               Gửi mail thông báo không trúng tuyển
             </button>
+            @endif
             @endif
           </div>
           @else
@@ -291,9 +307,27 @@
             </button>
             @endif
             @if($interview->status === "Đang hoạt động")
-            <button id="save_btn" type="submit" class="btn bg-primary text-white btn-md my-4" @if($interview->status !== "Chờ xác nhận") disabled @endif>
+            <button id="save_btn" type="button" data-bs-toggle="modal" data-bs-target="#confirmModal" class="btn bg-primary text-white btn-md my-4" @if($interview->status !== "Chờ xác nhận") disabled @endif>
               Lưu đánh giá và kết thúc
             </button>
+            <!-- Confirm save Modal -->
+            <div class="modal fade" id="confirmModal" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="confirmModalLabel">Xác nhận lưu</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <h6 class="mb-0">Bạn có chắc chắn muốn lưu đánh giá cho vòng phỏng vấn này?</h6>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             @endif
           </div>
         </div>

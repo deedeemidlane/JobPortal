@@ -120,8 +120,26 @@
           <div class="d-flex gap-2 justify-content-end">
             <button type="submit" class="btn bg-info text-white btn-md mt-4 mb-4">Cập nhật</button>
             @if($role !== "HR")
-            <a href="/company/applications/{{$application->id}}/delete" class="btn bg-danger text-white btn-md mt-4 mb-4">Xoá ứng viên</a>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#confirmModal" class="btn bg-danger text-white btn-md mt-4 mb-4">Xoá ứng viên</button>
             @endif
+            <!-- Confirm delete Modal -->
+            <div class="modal fade" id="confirmModal" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="confirmModalLabel">Xác nhận xóa</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <h6 class="mb-0 text-danger">Bạn có chắc chắn muốn xóa ứng viên này?</h6>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <a href="/company/applications/{{$application->id}}/delete" type="button" class="btn btn-danger">Xóa</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </form>
       </div>
